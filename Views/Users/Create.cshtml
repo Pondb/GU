@@ -1,0 +1,495 @@
+﻿@model GU.Models.User
+@{
+    ViewData["Title"] = "Register";
+}
+
+<script language="javascript" type="text/javascript">
+
+
+    var userIsEmpty = "";
+    //AJAX Check User
+    function check_Email() {
+
+        var Email = $('#Email').val();
+        $.ajax
+            ({
+                
+                url: '@Url.Action("check_Email", "Users")',
+                cache: false,
+                type: 'GET',
+                data: {
+                    email: Email
+                },
+                success: function (data) {
+
+                    if (data == "HAVE") {
+                        userIsEmpty = "N";
+                        $("#checkUser").show();
+                        $("#checkUser").text("This Email is already used.");
+                        $("#checkUser").css('color', 'red');
+
+                        $('#Email').addClass('is-invalid');
+                        $('#Email').removeClass('is-valid');
+                    }
+                    else if (data == "NOT") {
+                        userIsEmpty = "Y";
+                        $("#checkUser").show();
+                        $("#checkUser").text("You can use this Email.");
+                        $("#checkUser").css('color', 'green');
+
+                        $('#Email').addClass('is-valid');
+                        $('#Email').removeClass('is-invalid');
+                    }
+                    
+    
+                },
+                error: function () {
+                    BootstrapDialog.show({ title: 'is-invalid', type: BootstrapDialog.TYPE_DANGER, message: 'AJAX ERROR' });
+                },
+            });
+    }
+
+    
+
+    $(document).ready(function () {
+
+        $('#Birthdate').datepicker({
+            dateFormat: 'dd/mm/yy',
+            changeMonth: true,
+            changeYear: true,
+            yearRange: '1900:2200'
+
+        });
+
+        $('#btnBirthdate').click(function () {
+
+            $('#Birthdate').val("");
+
+        });
+
+
+        $('#Email').blur(function () {
+
+            var email = $('#Email').val();
+            if (userIsEmpty == "N") {
+                
+            }
+            else {
+
+                if (email == "") {
+                    $('#Email').removeClass('is-invalid');
+                    $('#Email').removeClass('is-valid');
+                }
+
+                $("#checkUser").hide();
+            }
+            
+        });
+
+
+        $('#Password2').blur(function () {
+
+
+            var password = $("#Password").val();
+            var password2 = $("#Password2").val();
+
+            if (password == "" || password2 == "") {
+                $('#Password').removeClass('is-valid');
+                $('#Password2').removeClass('is-valid');
+                $('#Password').removeClass('is-invalid');
+                $('#Password2').removeClass('is-invalid');
+                $('#msg_Password').hide();
+
+            }
+            else {
+                if (password != password2) {
+                    $('#Password').removeClass('is-valid');
+                    $('#Password2').removeClass('is-valid');
+                    $('#Password').addClass('is-invalid');
+                    $('#Password2').addClass('is-invalid');
+
+                    $('#msg_Password').show();
+                    $("#msg_Password").text("Password not matches.");
+                    $("#msg_Password").css('color', 'red');
+
+                }
+                else if (password == password2) {
+                    $('#Password').removeClass('is-invalid');
+                    $('#Password2').removeClass('is-invalid');
+                    $('#Password').addClass('is-valid');
+                    $('#Password2').addClass('is-valid');
+
+                    $('#msg_Password').show();
+                    $("#msg_Password").text("Password matches.");
+                    $("#msg_Password").css('color', 'green');
+                }
+            }
+
+            
+            
+
+        });
+
+
+        $('#Password').blur(function () {
+
+
+            var password = $("#Password").val();
+            var password2 = $("#Password2").val();
+
+            if (password == "" || password2 == "") {
+                $('#Password').removeClass('is-valid');
+                $('#Password2').removeClass('is-valid');
+                $('#Password').removeClass('is-invalid');
+                $('#Password2').removeClass('is-invalid');
+                $('#msg_Password').hide();
+
+            }
+            else {
+                if (password != password2) {
+                    $('#Password').removeClass('is-valid');
+                    $('#Password2').removeClass('is-valid');
+                    $('#Password').addClass('is-invalid');
+                    $('#Password2').addClass('is-invalid');
+
+                    $('#msg_Password').show();
+                    $("#msg_Password").text("Password not matches.");
+                    $("#msg_Password").css('color', 'red');
+
+                }
+                else if (password == password2) {
+                    $('#Password').removeClass('is-invalid');
+                    $('#Password2').removeClass('is-invalid');
+                    $('#Password').addClass('is-valid');
+                    $('#Password2').addClass('is-valid');
+
+                    $('#msg_Password').show();
+                    $("#msg_Password").text("Password matches.");
+                    $("#msg_Password").css('color', 'green');
+                }
+            }
+
+
+
+
+        });
+
+
+        //First_name validation
+        $('#First_Name').blur(function () {
+
+
+            var First_Name = $("#First_Name").val();
+            
+
+            if (First_Name == "") {
+                $('#First_Name').removeClass('is-valid');
+                $('#First_Name').removeClass('is-invalid');
+
+                $('#First_Name').addClass('is-invalid');
+            }
+            else {  
+                $('#First_Name').removeClass('is-valid');
+                $('#First_Name').removeClass('is-invalid');
+
+                $('#First_Name').addClass('is-valid');
+            }
+
+
+
+
+        });
+
+        $('#Last_Name').blur(function () {
+
+
+            var First_Name = $("#Last_Name").val();
+
+
+            if (First_Name == "") {
+                $('#Last_Name').removeClass('is-valid');
+                $('#Last_Name').removeClass('is-invalid');
+
+                $('#Last_Name').addClass('is-invalid');
+            }
+            else {
+                $('#Last_Name').removeClass('is-valid');
+                $('#Last_Name').removeClass('is-invalid');
+
+                $('#Last_Name').addClass('is-valid');
+            }
+
+
+
+
+        });
+
+        
+
+        $('#btnSubmit').click(function () {
+
+            //$('#Password').removeClass('is-invalid');
+            //$('#Password2').removeClass('is-invalid');
+
+            //Remove is-valid
+            $('#Email').removeClass('is-valid');
+            $('#Password').removeClass('is-valid');
+            $('#Password2').removeClass('is-valid');
+            $('#First_Name').removeClass('is-valid');
+            $('#Last_Name').removeClass('is-valid');
+            $('#Birthdate').removeClass('is-valid');
+
+            //Remove is-invalid
+            $('#Email').removeClass('is-invalid');
+            $('#Password').removeClass('is-invalid');
+            $('#Password2').removeClass('is-invalid');
+            $('#First_Name').removeClass('is-invalid');
+            $('#Last_Name').removeClass('is-invalid');
+            $('#Birthdate').removeClass('is-invalid');
+
+            var Email = $("#Email").val();
+            var password = $("#Password").val();
+            var password2 = $("#Password2").val();
+            var first_name = $("#First_Name").val();
+            var last_name = $("#Last_Name").val();
+            var birthdate = $("#Birthdate").val();
+
+            var validateArray = [];
+
+
+            if (Email == "") {
+                validateArray.push("Please enter <b>'Email'</b> before submit.");
+            }
+            if (password == "") {
+                validateArray.push("Please enter <b>'Password'</b> before submit.");
+            }
+            if (first_name == "") {
+                validateArray.push("Please enter <b>'First Name'</b> before submit.");
+            }
+            if (last_name == "") {
+                validateArray.push("Please enter <b>'Last Name'</b> before submit.");
+            }
+            if (birthdate == "") {
+                validateArray.push("Please enter <b>'Birthdate'</b> before submit.");
+            }
+
+            
+
+            if (validateArray.length > 0) {
+                var text = "";
+
+                var i;
+
+                for (i = 0; i < validateArray.length; i++) {
+                    text += validateArray[i] + "<br>";
+                }
+
+                //alert_bt('Caution', text, "danger");
+
+                //BootstrapDialog.show({ title: 'Caution', type: BootstrapDialog.TYPE_WARNING, message: text });
+
+                if (text.includes("Email")) {
+                    $('#Email').addClass('is-invalid');
+                }
+                if (text.includes("Password")) {
+                    $('#Password').addClass('is-invalid');
+                    $('#Password2').addClass('is-invalid');
+                }
+                if (text.includes("First Name")) {
+                    $('#First_Name').addClass('is-invalid');
+                }
+                if (text.includes("Last Name")) {
+                    $('#Last_Name').addClass('is-invalid');
+                }
+                if (text.includes("Birthdate")) {
+                    $('#Birthdate').addClass('is-invalid');
+                }
+                
+
+                $('#alert_message').show();
+                $("#alert_message").html(text);
+                $("#alert_message").css('color', 'red');
+
+                
+
+
+
+               
+
+
+
+                return false;
+            }
+            else {
+
+                if (password != password2) {
+                    $('#msg_Password').show();
+                    $("#msg_Password").text("Password not matches.");
+                    $("#msg_Password").css('color', 'red');
+
+                    $('#Password').addClass('is-invalid');
+                    $('#Password2').addClass('is-invalid');
+                    return false;
+                }
+
+                if (userIsEmpty == "N") {
+                    BootstrapDialog.show({ title: 'Email', type: BootstrapDialog.TYPE_WARNING, message: 'This Email is already used.' });
+                    return false;
+                }
+                else if (userIsEmpty == "Y") {
+                    return true;
+                }
+             
+                
+
+            }
+
+        });
+
+    });
+
+</script>
+
+<style>
+    hr.style2 {
+        border-top: 3px double #8c8b8b;
+        background-color: cornflowerblue;
+    }
+
+    #sp1 {
+        background-color: #cdc9c9;
+    }
+
+    .error {
+        border: 1px solid red;
+    }
+
+    .pass {
+        border: 1px solid green;
+    }
+
+    .main-panel {
+        border: 1px;
+        background-color: #eaeaea;
+        border-radius: 20px;
+    }
+
+    
+
+</style>
+
+<div>
+    <div class="row">
+
+        <br />
+
+    </div>
+    
+
+    <p id="alert_message"></p>
+    
+
+    <form asp-action="Create" enctype="multipart/form-data">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Email:</label>
+                            <input asp-for="Email" id="Email" onkeyup="check_Email()" type="email" class="form-control" />
+                            <small id="checkUser"></small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Password:</label>
+                            <input asp-for="Password" id="Password" type="password" class="form-control" />
+                            <small id="msg_Password"></small>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Confirm Password:</label>
+                            <input id="Password2" type="password" class="form-control" />
+                            
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>First Name:</label>
+                            <input asp-for="First_Name" id="First_Name" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Last Name:</label>
+                            <input asp-for="Last_Name" id="Last_Name" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+
+                
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Birthdate:</label>
+                            <input asp-for="Birthdate" id="Birthdate" readonly class="form-control" />
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Gender:</label>
+                            <select asp-for="Gender" class="form-control">
+                                <option value="M">Male</option>
+                                <option value="F">Female</option>
+                                <option value="O">Other</option>
+                            </select>
+
+                        </div>
+                    </div>
+                </div>
+
+               
+
+                <br />
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+
+
+                            <a asp-area="" asp-controller="Home" asp-action="Index"><button type="button" class="btn btn-outline btn-primary">Back</button></a>
+                            <input type="submit" id="btnSubmit" value="Submit" class="btn btn-primary" />
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+            </div>
+        </div>
+    </form>
+
+
+    @Html.Raw(TempData["msg"])
+
+
+</div>
+
+
+
+

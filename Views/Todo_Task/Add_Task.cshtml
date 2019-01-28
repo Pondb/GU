@@ -1,0 +1,970 @@
+﻿@*@model GU.Models.ToDo_Task*@
+@model IEnumerable<GU.Models.ToDo_Task>
+@{
+    ViewData["Title"] = "Register";
+}
+
+
+@functions {
+
+//CONVERT DATE TO DISPLAY
+string ConvertDatetoDisplay(string dIn)
+{
+    var sObj = dIn.Split("-");
+
+    var sYear = dIn.Substring(0, 4);
+    var sMonth = dIn.Substring(4, 2);
+    var sDate = dIn.Substring(6, 2);
+
+    return sDate + "/" + sMonth + "/" + sYear;
+}
+
+//INSERT TIME TO DISPLAY
+string InsertTimeToDisplay(string timeIn)
+{
+    var timeObject = timeIn.Split("-");
+
+    var timeHour = timeIn.Substring(0, 2);
+    var timeMinute = timeIn.Substring(2, 2);
+
+
+
+    return timeHour + ":" + timeMinute;
+}
+
+}
+
+<script language="javascript" type="text/javascript">
+
+
+    function task_add() {
+
+        var task_Parent_ID = $('#Task_Parent_ID').val();
+        var task_Name = $('#Task_Name').val();
+        var task_Due_Date = $('#Task_Due_Date').val();
+        var task_Due_Time = $('#Task_Due_Time').val();
+        var task_Description = $('#Task_Description').val();
+
+        $.ajax
+            ({
+
+                url: '@Url.Action("Add", "Todo_Task")',
+                cache: false,
+                type: 'POST',
+                data: {
+                    Task_Parent_ID: task_Parent_ID,
+                    Task_Name: task_Name,
+                    Task_Due_Date: task_Due_Date,
+                    Task_Due_Time: task_Due_Time,
+                    Task_Description: task_Description
+                },
+                success: function (data) {
+
+                    location.reload();
+                        
+
+                        
+
+
+                        
+
+
+                },
+                error: function () {
+                    BootstrapDialog.show({ title: 'Error', type: BootstrapDialog.TYPE_DANGER, message: 'AJAX ERROR' });
+                },
+            });
+    }
+
+    //Add Daily Task
+    function d_task_add() {
+
+       
+        var task_Name = $('#d_Task_Name').val();
+        var task_Due_Date = $('#d_Task_Due_Date').val();
+        var task_Due_Time = $('#d_Task_Due_Time').val();
+        var task_Description = $('#d_Task_Description').val();
+
+        $.ajax
+            ({
+
+                url: '@Url.Action("Add", "Todo_Task")',
+                cache: false,
+                type: 'POST',
+                data: {
+                    
+                    Task_Name: task_Name,
+                    Task_Due_Date: task_Due_Date,
+                    Task_Due_Time: task_Due_Time,
+                    Task_Description: task_Description
+                },
+                success: function (data) {
+
+                    //$("#alert_message").fadeIn(300);
+                    //$('#alert_message').text("Task added !");
+                    //$('#alert_message').css("color", "green");
+                    //$("#alert_message").delay(1500).fadeOut(300); 
+                    location.reload();
+                    
+                       
+                },
+                error: function () {
+                    BootstrapDialog.show({ title: 'Error', type: BootstrapDialog.TYPE_DANGER, message: 'AJAX ERROR' });
+                },
+            });
+     }
+
+    function checked_task() {
+
+        var task_Parent_ID = $('#Task_Parent_ID').val();
+        var task_Name = $('#Task_Name').val();
+        var task_Due_Date = $('#Task_Due_Date').val();
+        var task_Due_Time = $('#Task_Due_Time').val();
+        var task_Description = $('#Task_Description').val();
+            $.ajax
+                ({
+
+                    url: '@Url.Action("Add", "Checked_Task")',
+                    cache: false,
+                    type: 'POST',
+                    data: {
+                        Task_Parent_ID: task_Parent_ID,
+                        Task_Name: task_Name,
+                        Task_Due_Date: task_Due_Date,
+                        Task_Due_Time: task_Due_Time,
+                        Task_Description: task_Description
+                    },
+                    success: function (data) {
+
+                        location.reload();
+                        
+
+                        
+
+
+                        
+
+
+                    },
+                    error: function () {
+                        BootstrapDialog.show({ title: 'Error', type: BootstrapDialog.TYPE_DANGER, message: 'AJAX ERROR' });
+                    },
+                });
+        }
+
+
+    $(document).ready(function () {
+
+        
+
+
+        //$('#table_test').DataTable({
+        //    "ajax": {
+        //        "url": "/Todo_Task/GetTaskList",
+        //        "type": "GET",
+        //        "datatype": "json"
+
+        //    },
+        //    "columns": [
+        //        { "data": "Task_Name" },
+        //        { "data": "Task_Due_Date" },
+        //        { "data": "Task_Due_Time" },
+        //        { "data": "Task_Description" }
+        //    ]
+        //    ,
+        //    responsive: true
+        //    //,
+        //    //"columnDefs": [
+        //    //    {
+        //    //        "targets": [0],
+        //    //        "visible": false
+        //    //    }
+        //    //]
+
+        //});
+
+        $('#task_Table').DataTable({
+            responsive: true,
+            "columnDefs": [
+                {
+                    "targets": [3],
+                    "visible": false
+                }
+                ,
+                {
+                    "targets": [4],
+                    "visible": false
+                }
+
+            ]
+
+        });
+
+        var table = $('#task_Table').DataTable();
+
+        //alert_bt("HELLO", "This is my text.", "info");
+
+
+
+
+
+
+
+        $('#Task_Due_Date').datepicker({
+            dateFormat: 'dd/mm/yy',
+            changeMonth: true,
+            changeYear: true,
+            yearRange: '1900:2200'
+
+        });
+
+        $('#btnTask_Due_Date').click(function () {
+
+            $('#Task_Due_Date').val("");
+
+        });
+
+        $('#btnRedraw').click(function () {
+
+            table.draw();
+
+        });
+
+
+        //Default Task to hide finished column.
+        table
+            .columns(3)
+            .search("NOT")
+            .draw();
+
+        $("#showTask").change(function () {
+
+            if (this.value == "show") {
+
+                table
+                    .columns(3)
+                    .search("")
+                    .draw();
+            } else if (this.value == "hide") {
+
+                table
+                    .columns(3)
+                    .search("NOT")
+                    .draw();
+            }
+
+        });
+
+        
+        
+        $("#searchTodayTask").change(function () {
+
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1;
+
+            var yyyy = today.getFullYear();
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+
+            var todayNow = dd + '/' + mm + '/' + yyyy;
+
+            if (this.value == "Y") {
+
+                table
+                    .columns(2)
+                    .search(todayNow)
+                    .draw();
+            } else if (this.value == "N") {
+
+                table
+                    .columns(2)
+                    .search("")
+                    .draw();
+            }
+
+        });
+
+        $('#btnDaily').click(function () {
+
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1;
+
+            var yyyy = today.getFullYear();
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+            if (mm < 10) {
+                mm = '0' + mm;
+            } 
+
+            var todayNow = dd + '/' + mm + '/' + yyyy;
+            
+
+            $('#d_Task_Due_Date').val(todayNow);
+            $('#d_Task_Due_Time').val("23:59");
+            
+        });
+
+        $('#btnDailyAdd').click(function () {
+
+            var d_task_name = $("#d_Task_Name").val();
+            
+
+            var validateArray = [];
+
+
+            if (d_task_name == "") {
+                validateArray.push("Please enter <b>'Task Name'</b> before add.");
+            }
+            
+
+
+
+
+            if (validateArray.length > 0) {
+                var text = "";
+
+                var i;
+
+                for (i = 0; i < validateArray.length; i++) {
+                    text += validateArray[i] + "<br>";
+                }
+
+                
+
+
+                return false;
+            }
+            else {
+
+                //ต้องส่ง AJAX ADD ตรงนี้
+                d_task_add();
+                return true;
+
+
+
+
+            }
+        });
+
+
+
+        $('#btnAdd').click(function () {
+
+            var task_name = $("#Task_Name").val();
+            var task_due_date = $("#Task_Due_Date").val();
+            var task_due_time = $("#Task_Due_Time").val();
+
+            var validateArray = [];
+            
+
+            if (task_name == "") {
+                validateArray.push("Please enter <b>'Task Name'</b> before add.");
+            }
+            if (task_due_date == "") {
+                validateArray.push("Please enter <b>'Task Due Date'</b> before add.");
+            }
+            if (task_due_time == "") {
+                validateArray.push("Please enter <b>'Task Due Time'</b> before add.");
+            }
+            
+
+
+
+            if (validateArray.length > 0) {
+                var text = "";
+
+                var i;
+
+                for (i = 0; i < validateArray.length; i++) {
+                    text += validateArray[i] + "<br>";
+                }
+
+                $('#alertTab').addClass("show");
+                $('#alertText').empty();
+                $('#alertText').append(text);
+
+
+                return false;
+            }
+            else {
+
+                //ต้องส่ง AJAX ADD ตรงนี้
+                task_add();
+                return true;
+
+
+
+
+            }
+
+        });
+
+        
+
+        // SUBTASK ADD HERE ____________________________________________________________________________________________________________ //
+
+
+        ////ADD SUBTASK
+        //var subTask_1 = document.getElementById("subTask_1");
+
+        //subTask_1.addEventListener("keyup", function (event) {
+        //    // Cancel the default action, if needed
+        //    event.preventDefault();
+        //    // Number 13 is the "Enter" key on the keyboard
+        //    if (event.keyCode === 13) {
+        //        // Trigger the button element with a click
+        //        document.getElementById("addSubTask").click();
+        //    }
+        //});
+
+    });
+
+</script>
+
+<style>
+    hr.style2 {
+        border-top: 3px double #8c8b8b;
+        background-color: cornflowerblue;
+    }
+
+    #sp1 {
+        background-color: #cdc9c9;
+    }
+
+    .error {
+        border: 1px solid red;
+    }
+
+    .pass {
+        border: 1px solid green;
+    }
+
+    .main-panel {
+        border: 1px;
+        background-color: #eaeaea;
+        border-radius: 20px;
+    }
+</style>
+<br />
+
+
+<button id="addSubTask" hidden>Add</button>
+
+
+
+
+<button id="btnRedraw" hidden></button>
+
+<p id="alert_message"></p>
+
+<div class="row">
+    <div class="col-md-12">
+
+        <!-- daily task -->
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Add Task</h1>
+                <br />
+                <button data-toggle="collapse" data-target="#dailyTask" class="btn btn-outline-primary btn-block " id="btnDaily">Daily Task</button>
+
+                <div id="dailyTask" class="collapse">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <br />
+                            <hr />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1>Daily Task</h1>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Task Name:</label>
+                                        <input name="d_Task_Name" type="text" class="form-control" id="d_Task_Name">
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Due Date:</label>
+                                        <input name="d_Task_Due_Date" type="text" class="form-control" readonly id="d_Task_Due_Date">
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label>Time:</label>
+                                    <input name="d_Task_Due_Time" type="time" class="form-control" id="d_Task_Due_Time" readonly>
+                                </div>
+
+
+                            </div>
+
+
+
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Description:</label>
+                                        <textarea name="d_Task_Description" type="text" class="form-control" rows="5" id="d_Task_Description"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @*<button type="submit" class="btn btn-success btn-outline btn-outline-white">Add</button>*@
+                                    <button class="btn btn-success btn-outline btn-outline-white" id="btnDailyAdd">Add</button>
+                                </div>
+                            </div>
+                            <hr />
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <br />
+        </div>
+
+
+        <!-- normal task -->
+        <div class="row">
+            <div class="col-md-12">
+                <button data-toggle="collapse" data-target="#normalTask" class="btn btn-outline-secondary btn-block">Normal Task</button>
+
+                <div id="normalTask" class="collapse">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <br />
+                            <hr />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1>Let's add your target.</h1>
+
+
+                            @*<div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Task Parent: (Optional)</label>
+                                        <select name="Task_Parent_ID" class="chosen-select" asp-items="ViewBag.Task_ID"></select>
+                                    </div>
+                                </div>
+                            </div>*@
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Task Name:</label>
+                                        <input name="Task_Name" type="text" class="form-control" id="Task_Name">
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Due Date:</label>
+                                        <input name="Task_Due_Date" type="text" class="form-control" readonly id="Task_Due_Date">
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label>Time:</label>
+                                    <input name="Task_Due_Time" type="time" class="form-control" id="Task_Due_Time">
+                                </div>
+
+
+                            </div>
+
+
+
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Description:</label>
+                                        <textarea name="Task_Description" type="text" class="form-control" rows="5" id="Task_Description"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @*<button type="submit" class="btn btn-success btn-outline btn-outline-white">Add</button>*@
+                                    <button class="btn btn-success btn-outline btn-outline-white" id="btnAdd">Add</button>
+                                </div>
+                            </div>
+                            <hr />
+
+                            
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <br />
+            
+        </div>
+        <hr />
+
+
+        <!-- task table -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1>How about your targets?.</h1>
+                        <br />
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Show all completed and failed tasks:</label>
+                                    <select id="showTask" class="form-control">
+                                        <option value="hide" selected>Hide</option>
+                                        <option value="show">Show</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Show only today tasks:</label>
+                                    <select id="searchTodayTask" class="form-control">
+                                        <option value="N" selected>Hide</option>
+                                        <option value="Y">Show</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+
+                        
+
+                        
+
+                        @*<table width="100%" class="table table-striped table-bordered table-hover nowrap" id="task_Table">*@
+                        <table width="100%" class="table table-hover" id="task_Table">
+
+                            @*//Search*@
+
+                            <thead>
+
+                                <tr>
+                                    <th></th>
+
+                                    <th>
+                                        Task Name
+                                    </th>
+                                    <th>
+                                        Due Date
+                                    </th>
+
+                                    <th>
+                                        is Finish
+                                    </th>
+
+                                    <th>
+                                        Description
+                                    </th>
+
+                                    <th>
+                                        <!--Remove-->
+                                    </th>
+
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @foreach (var item in Model)
+                                {
+
+                                    //task completed.
+                                    if (item.Task_isComplete == "Y")
+                                    {
+                                        <tr class="table-success">
+
+                                            <td style="text-align:center">
+                                                @{
+                                                <button type="button" class="btn btn-success btn-circle">
+                                                    <i class="fa fa-check"></i>
+                                                </button>
+                                                }
+
+                                            </td>
+
+                                            <td style="text-align:center">
+                                                @item.Task_Name
+                                            </td>
+
+                                            <td style="text-align:center">
+                                                @ConvertDatetoDisplay(item.Task_Due_Date) | @InsertTimeToDisplay(item.Task_Due_Time)
+                                            </td>
+
+                                            <td style="text-align:center">
+
+                                                @{
+                                                    if (item.Task_isFail == "Y")
+                                                    {
+                                                        <font>YES</font>
+                                                    }
+                                                    else if (item.Task_isComplete == "N")
+                                                    {
+                                                        <font>NOT</font>
+                                                    }
+                                                    else if (item.Task_isComplete == "Y")
+                                                    {
+                                                        <font style="color:green">YES</font>
+                                                    }
+
+                                                    else
+                                                    {
+                                                        <font style="color:red">ERROR</font>
+                                                    }
+                                                }
+
+                                            </td>
+
+                                            <td style="text-align:center">
+                                                <a href="" data-toggle="tooltip" data-placement="top" title="@item.Task_Description">Description</a>
+                                            </td>
+
+                                            <td style="text-align:center">
+                                                @{
+
+                                                    if (item.Task_isComplete == "Y")
+                                                    {
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <a asp-action="Remove_Task" asp-route-id="@item.Task_ID">
+                                                            <button type="button" class="btn btn-outline-danger btn-circle">
+                                                                <i class="fa fa-remove"></i>
+                                                            </button>
+                                                        </a>
+                                                    }
+
+                                                }
+                                            </td>
+
+
+
+
+
+                                        </tr>
+                                    }
+                                    else if (item.Task_isComplete == "N" && item.Task_isFail == "N")
+                                    {
+                                        <tr>
+                                            <td style="text-align:center">
+                                                @{
+                                                    <a asp-action="Checked_Task" asp-route-id="@item.Task_ID">
+                                                        <button type="button" class="btn btn-success btn-outline btn-circle">
+                                                            <i class="fa fa-check"></i>
+                                                        </button>
+                                                    </a>
+                                                }
+
+                                            </td>
+
+                                            <td style="text-align:center">
+                                                @item.Task_Name
+                                            </td>
+
+                                            <td style="text-align:center">
+                                                @ConvertDatetoDisplay(item.Task_Due_Date) | @InsertTimeToDisplay(item.Task_Due_Time)
+                                            </td>
+
+                                            <td style="text-align:center">
+
+                                                @{
+                                                    if (item.Task_isFail == "Y")
+                                                    {
+                                                        <font>YES</font>
+                                                    }
+                                                    else if (item.Task_isComplete == "N")
+                                                    {
+                                                        <font>NOT</font>
+                                                    }
+                                                    else if (item.Task_isComplete == "Y")
+                                                    {
+                                                        <font style="color:green">YES</font>
+                                                    }
+
+                                                    else
+                                                    {
+                                                        <font style="color:red">ERROR</font>
+                                                    }
+                                                }
+
+                                            </td>
+
+                                            <td style="text-align:center">
+                                                <a href="#" data-toggle="tooltip" data-placement="top" title="Description">@item.Task_Description</a>
+                                            </td>
+
+                                            <td style="text-align:center">
+                                                @{
+                                                    if (item.Task_isComplete == "Y")
+                                                    {
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <a asp-action="Remove_Task" asp-route-id="@item.Task_ID">
+                                                            <button type="button" class="btn btn-outline-danger btn-circle">
+                                                                <i class="fa fa-remove"></i>
+                                                            </button>
+                                                        </a>
+                                                    }
+                                                }
+                                            </td>
+
+
+
+
+
+                                        </tr>
+                                    }
+                                    else if(item.Task_isComplete == "N" && item.Task_isFail == "Y"){ 
+
+                                        <tr class="table-danger">
+                                            <td style="text-align:center">
+                                                <font style="color:red">Failed</font>
+
+                                            </td>
+
+                                            <td style="text-align:center">
+                                                @item.Task_Name
+                                            </td>
+
+                                            <td style="text-align:center">
+                                                @ConvertDatetoDisplay(item.Task_Due_Date) | @InsertTimeToDisplay(item.Task_Due_Time)
+                                            </td>
+
+                                            <td style="text-align:center">
+
+                                                @{
+                                                    if (item.Task_isFail == "Y")
+                                                    {
+                                                        <font>YES</font>
+                                                    }
+                                                    else if (item.Task_isComplete == "N")
+                                                    {
+                                                        <font>NOT</font>
+                                                    }
+                                                    else if (item.Task_isComplete == "Y")
+                                                    {
+                                                        <font style="color:green">YES</font>
+                                                    }
+
+                                                    else
+                                                    {
+                                                        <font style="color:red">ERROR</font>
+                                                    }
+                                                }
+
+                                            </td>
+                                            <td style="text-align:center">
+                                                <a href="#" data-toggle="tooltip" data-placement="top" title="Description">@item.Task_Description</a>
+                                            </td>
+
+                                            <td style="text-align:center">
+
+                                                <font style="color:red">You have failed this city.</font>
+                                            </td>
+
+
+
+
+
+                                        </tr>    
+                                    }
+                                    else
+                                    {
+                                        <tr class="table-danger">
+                                            <td style="text-align:center">
+                                                <font style="color:red">ERROR</font>
+                                            </td>
+
+                                            <td style="text-align:center">
+                                                <font style="color:red">ERROR</font>
+                                            </td>
+
+                                            <td style="text-align:center">
+                                                <font style="color:red">ERROR</font>
+                                            </td>
+
+
+                                            <td style="text-align:center">
+                                                <font style="color:red">ERROR</font>
+
+                                            </td>
+
+                                            <td style="text-align:center">
+                                                <font style="color:red">ERROR</font>
+
+                                            </td>
+
+                                            <td style="text-align:center">
+                                                <font style="color:red">ERROR</font>
+
+                                            </td>
+
+
+                                        </tr>
+                                    }
+
+
+
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--DAILY TASK-->
+
+
+     
+
+    </div>
+</div>
+
+
+
+
+
+
+

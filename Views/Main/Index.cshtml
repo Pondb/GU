@@ -1,0 +1,207 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    @using Microsoft.AspNetCore.Http
+
+    var user_id = Context.Session.GetString("User_ID");
+}
+
+@model GU.Models.Trees
+
+
+
+<script language="javascript" type="text/javascript">
+
+
+
+
+    @*$(document).ready(function () {
+
+
+
+
+
+    });*@
+
+    window.onload = function () {
+        resize();
+        window.addEventListener("resize", resize, false);
+
+    };
+
+
+</script>
+
+<script>
+
+    //NIGHT OR DAY FUNCTION
+    var bgTime = "@ViewBag.Scene_Time_BG";
+    var treeLevel = @Model?.Tree_Level;
+    var treeIMG = "@ViewBag.TreeIMG";
+
+    var task_count = @ViewBag.task_count;
+    var task_complete = @ViewBag.task_finished;
+
+    var tree_hp = @ViewBag.Tree_HP;
+    var taskToday = @ViewBag.task_today;
+
+    // * 0.7
+    //var userWidth = window.innerWidth * devicePixelRatio;
+    //var userHeight = window.innerHeight * devicePixelRatio;
+
+    var userWidth = window.innerWidth;
+    var userHeight = window.innerHeight;
+
+    //var userWidth = 1280;
+    //var userHeight = 720;
+
+
+
+
+
+    var config = {
+        type: Phaser.AUTO,
+        width: userWidth,
+        height: userHeight,
+        physics: {
+            default: 'arcade',
+            arcade: {
+                gravity: { y: 200 }
+            }
+        },
+        scene: {
+            preload: preload,
+            create: create
+        },
+        parent: 'phaser-container',
+        dom: {
+            createContainer: true
+        },
+    };
+
+
+    var game = new Phaser.Game(config);
+
+    
+
+
+    function resize() {
+        var canvas = document.querySelector("canvas");
+        var windowWidth = window.innerWidth;
+        var windowHeight = window.innerHeight;
+        var windowRatio = windowWidth / windowHeight;
+        var gameRatio = game.config.width / game.config.height;
+
+        if (windowRatio < gameRatio) {
+            canvas.style.width = windowWidth + "px";
+            canvas.style.height = (windowWidth / gameRatio) + "px";
+        }
+        else {
+            canvas.style.width = (windowHeight * gameRatio) + "px";
+            canvas.style.height = windowHeight + "px";
+        }
+    }
+
+
+    function preload() {
+
+        //ได้แล้ววว ต้องใช้ .. นำหน้าก่อน
+        this.load.image('background', bgTime);
+
+
+        this.load.image('trees', treeIMG);
+        //this.load.image('coin_b', '../assets/GU_Game/img/PNG/coin/leaf-coin.png');
+        this.load.image('coin_icon', '../assets/GU_Game/img/PNG/coin/leaf-coin.png');
+        this.load.image('task_icon', '../assets/GU_Game/img/PNG/task/task.png');
+
+        
+
+
+
+    }
+    function create() {
+
+                   
+
+        //window.addEventListener('resize', resize);
+        //resize();
+
+        this.add.image(userWidth * 0.5, userHeight * 0.65, 'background').setScale(1);
+        
+        this.add.image(userWidth * 0.37, userWidth * 0.23, 'trees').setScale(0.75);
+          
+        this.add.image(userWidth * 0.05, userWidth * 0.05, 'coin_icon').setScale(0.05);
+        //this.add.image(userWidth * 0.14, userWidth * 0.05, 'task_icon').setScale(0.05);
+        this.add.image(userWidth * 0.25, userWidth * 0.05, 'task_icon').setScale(0.05);
+
+
+        //TREE LEVEL
+        coin_text = this.add.text(userWidth * 0.07, userWidth * 0.045, 'LV ' + treeLevel, { fontSize: '24px', fill: 'white' });
+
+        //Task/Complete_Task
+        task_text = this.add.text(userWidth * 0.12, userWidth * 0.045,  "HP:" + tree_hp + '/100', { fontSize: '24px', fill: 'white' });
+
+        //TREE HP
+        hp_text = this.add.text(userWidth * 0.27, userWidth * 0.045, task_complete + '/' + task_count, { fontSize: '24px', fill: 'white' });
+
+        havetoFinish_text = this.add.text(userWidth * 0.045, userWidth * 0.075, taskToday + " tasks should be completed within today.", { fontSize: '18px', fill: '#ffe790' });
+
+
+        
+
+      
+
+       
+
+
+
+
+    }
+
+                
+
+</script>
+
+@*<script src="~/js/main.js"></script>*@
+<div class="row">
+    <br />
+
+
+</div>
+
+@{
+    if (user_id != null)
+    {
+        <div class="row" style="color:#ffe790">
+            <div class="col-md-12">
+                <div id="phaser-container">
+
+                </div>
+            </div>
+        </div>
+        
+    }
+    else
+    {
+      
+        <br />
+        <div class="row">
+            <h1 class="display-4">Please Login Before enter this content.</h1>
+        </div>
+
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@Html.Raw(TempData["msg"])

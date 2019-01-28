@@ -1,0 +1,385 @@
+﻿<!DOCTYPE html>
+<html>
+
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["User_ID"] - GROW UP</title>
+
+
+
+    <script src="~/js/jquery-3.3.1.min.js"></script>
+    <script src="~/js/jquery-ui-1.12.1.min.js"></script>
+    @*<script src="~/bootstrap-4.0.0-alpha.6-dist/js/bootstrap.min.js"></script>*@
+
+    <!-- NEWLY ADD-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+
+
+
+
+    @*<script src="~/js/bootstrap-dialog.js"></script>*@
+    <script src="~/vendor/raphael/raphael.min.js"></script>
+
+    <script src="~/vendor/morrisjs/morris.min.js"></script>
+    <script src="~/data/morris-data.js"></script>
+    <script src="~/vendor/metisMenu/metisMenu.min.js"></script>
+    <script src="~/js/chosen.jquery.js"></script>
+
+ 
+
+
+
+
+
+
+    @* CSS *@
+
+    <script src="~/Datatables/datatables.min.js"></script>
+    <link href="~/Datatables/datatables.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="~/css/jQuery-ui-1.12.1.css" />
+    <link href="~/js/bootstrap-dialog.css" rel="stylesheet" type="text/css" />
+    @*<link href="~/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />*@
+
+    <!-- NEW ADD -->
+    @*<link href="~/bootstrap-4.0.0-alpha.6-dist/css/bootstrap.min.css" rel="stylesheet" />*@
+
+    <!-- NEW ADD -->
+
+
+    <link href="~/dist/css/sb-admin-2.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/js/prism.css">
+    <link rel="stylesheet" href="~/css/chosen.css">
+    <link href="~/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    @*<link rel="stylesheet" href="~/assets/magnific-popup/magnific-popup.css" />
+        <script src="~/assets/magnific-popup/magnific-popup.js"></script>*@
+    <script src="~/Datatables/Buttons-1.5.2/js/buttons.bootstrap.min.js"></script>
+    <link href="~/Datatables/Buttons-1.5.2/css/buttons.bootstrap.min.css" />
+
+    <script src="~/js/phaser.js"></script>
+    <script src="~/js/phaser.min.js"></script>
+
+
+
+
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
+
+    <style>
+        .table thead,
+        .table th {
+            text-align: center;
+        }
+
+        .table tbody,
+        .table td {
+            text-align: left;
+        }
+
+        body {
+            font-family: 'Titillium Web', sans-serif;
+        }
+    </style>
+
+
+
+    <script>
+
+        function openLoginModal() {
+            document.getElementById("modalOpen").click();
+        }
+
+        function alert_bt(txtHeader, txt, alertClass) {
+
+            $('#alertTab').show();
+            //Remove All Class
+            $('#alertTab').removeClass("alert-success");
+            $('#alertTab').removeClass("alert-info");
+            $('#alertTab').removeClass("alert-warning");
+            $('#alertTab').removeClass("alert-danger");
+            $('#alertTab').removeClass("alert-primary");
+            $('#alertTab').removeClass("alert-secondary");
+            $('#alertTab').removeClass("alert-dark");
+            $('#alertTab').removeClass("alert-light");
+            $('#alertTab').removeClass("show");
+
+
+            $('#alertTab').addClass("alert-" + alertClass);
+            $('#alertTab').addClass("show");
+            $('#alertText').empty();
+            $('#alertText').append("<strong>" + txtHeader + "</strong> " + txt);
+
+        }
+
+
+
+        function auth_login() {
+
+            var Email = $('#input_Email').val();
+            var Password = $('#input_Password').val();
+            $.ajax
+                ({
+
+                    url: '@Url.Action("auth_login", "Home")',
+                    cache: false,
+                    type: 'POST',
+                    data: {
+                        email: Email,
+                        password: Password
+                    },
+                    success: function (data) {
+
+                        if (data == "AUTH_NOT") {
+                            $("#msgLogin").text("Invalid Email or Password");
+                            $("#msgLogin").css('color', 'red');
+                            $("#msgLogin").show();
+                        }
+                        else if (data == "USER_NOT_FOUND") {
+                            $("#msgLogin").text("Invalid Email or Password");
+                            $("#msgLogin").css('color', 'red');
+                            $("#msgLogin").show();
+                        }
+                        else if (data == "AUTH_PASS") {
+                            location.reload();
+                        }
+                        else if (data == "AUTH_LOCK") {
+                            $("#msgLogin").text("Your account has locked. Please contact administrator.");
+                            $("#msgLogin").css('color', 'orange');
+                            $("#msgLogin").show();
+                        }
+
+
+                    },
+                    error: function () {
+                        BootstrapDialog.show({ title: 'Error', type: BootstrapDialog.TYPE_DANGER, message: 'AJAX ERROR' });
+                    },
+                });
+        }
+
+        $(document).ready(function () {
+
+
+
+            //$('#dataTables').DataTable({
+            //    responsive: true,
+            //    "autoWidth": false,
+            //    dom: 'Bfrtip',
+            //    buttons: [
+            //        'copy', 'excel', 'print'
+            //    ]
+            //    //scrollX: "100%"
+            //});
+
+            //Hide LoginModal
+
+            $('#modalOpen').hide();
+            $('#msgLogin').hide();
+           
+            
+            
+
+
+            //ทำ Alert Bootstrap ใหม่ทั้งหมด
+            //$('#alertTab').addClass("show");
+            //$('#alertText').empty();
+            //$('#alertText').append("<strong>Success!!</strong>");
+
+
+            $("a[data-toggle=\"tab\"]").on("shown.bs.tab", function (e) {
+
+                $($.fn.dataTable.tables(true)).DataTable()
+                    .columns.adjust()
+                    .responsive.recalc();
+            });
+
+            $(".dataTables_scrollHeadInner").css({ "width": "100%" });
+
+            $(".table ").css({ "width": "100%" });
+
+            $('.chosen-select').chosen(
+            );
+
+            var config = {
+                '.chosen-select': {},
+                '.chosen-select-deselect': { allow_single_deselect: true },
+                '.chosen-select-no-single': { disable_search_threshold: 10 },
+                '.chosen-select-no-results': { no_results_text: 'Data not found !!' },
+                '.chosen-select-rtl': { rtl: true },
+                '.chosen-select-width': { width: '95%' },
+
+            }
+            for (var selector in config) {
+                $(selector).chosen(config[selector]);
+            }
+
+
+
+            //Enter to Login
+            var password_field = document.getElementById("input_Password");
+            var email_field = document.getElementById("input_Email");
+
+            password_field.addEventListener("keyup", function (event) {
+                // Cancel the default action, if needed
+                event.preventDefault();
+                // Number 13 is the "Enter" key on the keyboard
+                if (event.keyCode === 13) {
+                    // Trigger the button element with a click
+                    document.getElementById("submit_login").click();
+                }
+            });
+
+            email_field.addEventListener("keyup", function (event) {
+                // Cancel the default action, if needed
+                event.preventDefault();
+                // Number 13 is the "Enter" key on the keyboard
+                if (event.keyCode === 13) {
+                    // Trigger the button element with a click
+                    document.getElementById("submit_login").click();
+                }
+            });
+
+
+        });
+
+
+
+    </script>
+
+</head>
+
+
+
+
+
+
+<body>
+
+
+    @await Component.InvokeAsync("MenuList")
+
+    <partial name="_CookieConsentPartial" />
+
+
+    @*<div id="alertTab" class="alert alert-success alert-dismissible fade" style="text-align:center">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <div id="alertText">
+
+        </div>
+    </div>*@
+    
+
+    <div class="container body-content">
+
+
+        @RenderBody()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <!--MODAL-->
+        <button type="button" class="btn btn-info btn-lg" id="modalOpen" data-toggle="modal" data-target="#modal_login">Open Modal</button>
+        <!-- Modal -->
+        <div class="modal fade" id="modal_login" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        @*<h4 class="modal-title">Login</h4>*@
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                    </div>
+                    <div class="modal-body">
+
+                        @*@HttpContext.Current.Session["Username"].ToString();*@
+
+                        @*@using (Html.BeginForm("Login", "Home", FormMethod.Post, new { @class = "ui large form" }))
+                            {*@
+                        <div class="row">
+                            <div class="col-md-1">
+
+                            </div>
+                            <div class="col-md-10">
+
+
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Email</label>
+                                    <input type="email" class="form-control" id="input_Email" name="input_Email" aria-describedby="emailHelp" placeholder="Enter email">
+                                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">Password</label>
+                                    <input type="password" class="form-control" id="input_Password" name="input_Password" placeholder="Password">
+                                </div>
+
+                                <div id="msgLogin">
+                                    <h5 id="msgReturn" style="color:red">Invalid Email or Password</h5>
+
+                                </div>
+
+                                <div class="form-group">
+                                    <a asp-area="" asp-controller="Users" asp-action="Create">Sign up</a>
+
+                                </div>
+                                <button class="btn btn-primary" id="submit_login" onclick="auth_login()">Submit</button>
+                            </div>
+                            <div class="col-md-1">
+
+                            </div>
+                        </div>
+                        @*}*@
+
+                        <br />
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <footer>
+            <p>&copy; 2018 - GROW UP</p>
+        </footer>
+
+
+    </div>
+
+    @*<environment include="Development">
+            <script src="~/lib/jquery/dist/jquery.js"></script>
+            <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+            <script src="~/js/site.js" asp-append-version="true"></script>
+        </environment>
+        <environment exclude="Development">
+            <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
+                    asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                    asp-fallback-test="window.jQuery"
+                    crossorigin="anonymous"
+                    integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT">
+            </script>
+            <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
+                    asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                    asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                    crossorigin="anonymous"
+                    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
+            </script>
+            <script src="~/js/site.min.js" asp-append-version="true"></script>
+        </environment>*@
+
+    @RenderSection("Scripts", required: false)
+
+
+</body>
+</html>
