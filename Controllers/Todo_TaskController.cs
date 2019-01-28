@@ -40,6 +40,7 @@ namespace GU.Controllers
             int user_id;
 
             var test_push = 0;
+            var test_visual_studio_push = true;
 
             if (user_id_string != null)
             {
