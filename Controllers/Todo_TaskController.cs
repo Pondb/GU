@@ -39,8 +39,7 @@ namespace GU.Controllers
             string user_id_string = HttpContext.Session.GetString("User_ID");
             int user_id;
 
-            var test_push = 0;
-            var test_visual_studio_push = true;
+            
 
             if (user_id_string != null)
             {
