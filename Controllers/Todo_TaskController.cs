@@ -33,7 +33,7 @@ namespace GU.Controllers
 
         }
 
-        
+        //Removed Task from table.
         public IActionResult Remove_Task(int id)
         {
             string user_id_string = HttpContext.Session.GetString("User_ID");
@@ -59,32 +59,6 @@ namespace GU.Controllers
 
                 return RedirectToAction("Add_Task", "Todo_Task");
 
-                //using (IDbContextTransaction dbTran = _context.Database.BeginTransaction())
-                //{
-
-                //    try
-                //    {
-                //        var task = _context.ToDo_Task.Where(i => i.Task_ID == id).SingleOrDefault();
-                //        _context.Remove(task);
-                //        _context.SaveChangesAsync();
-
-                //        dbTran.Commit();
-                //    }
-                //    catch(Exception ex)
-                //    {
-                //        var message = ex.Message;
-                //    }
-
-
-
-                //    return RedirectToAction("Add_Task","Todo_Task");
-
-                //}
-
-
-
-
-
             }
             else
             {
@@ -96,7 +70,7 @@ namespace GU.Controllers
         }
 
 
-        
+        //Add_Task Views.
         public IActionResult Add_Task()
         {
             string user_id_string = HttpContext.Session.GetString("User_ID");
@@ -135,6 +109,7 @@ namespace GU.Controllers
            
         }
 
+        // Task to List and JSON.
         //public ActionResult GetTaskList()
         //{
 
@@ -157,9 +132,9 @@ namespace GU.Controllers
 
         //}
 
-
+        
+         //Add Task to table.
         [HttpPost]
-        //public ActionResult Add(string Task_Name, string Task_Due_Date, string Task_Due_Time, string Task_Description)
         public ActionResult Add([Bind("Task_ID, Task_Parent_ID, User_ID, Task_Name, Task_Due_Date, Task_Due_Time, Task_Description, Task_isFocus, Task_Create_Date, Task_Update_Date, Task_Status, Task_isComplete")] ToDo_Task ToDo_Task)
         {
 
@@ -204,7 +179,7 @@ namespace GU.Controllers
                 ToDo_Task.Task_Status = "Y";
 
 
-
+                _CLSR.Exp_Up(user_id, 2);
 
                 _context.Add(ToDo_Task);
                 _context.SaveChanges();
@@ -219,7 +194,7 @@ namespace GU.Controllers
 
 
         
-        //public ActionResult Add(string Task_Name, string Task_Due_Date, string Task_Due_Time, string Task_Description)
+        //Checked Task
         public IActionResult Checked_Task(int id,[Bind("Task_ID, Task_Parent_ID, User_ID, Task_Name, Task_Due_Date, Task_Due_Time, Task_Description, Task_isFocus, Task_Create_Date, Task_Update_Date, Task_Status, Task_isComplete")] ToDo_Task ToDo_Task)
         {
 
@@ -251,6 +226,8 @@ namespace GU.Controllers
                 String cTime = _CLSR.GetTimeNow("");
 
                 todo_task.Task_isComplete = "Y";
+
+                _CLSR.Exp_Up(user_id, 10);
                 
 
                 _context.Update(todo_task);

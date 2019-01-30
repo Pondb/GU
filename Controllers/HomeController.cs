@@ -54,6 +54,7 @@ namespace GU.Controllers
 
             if (user != null)
             {
+                //Login success
                 if (email.Equals(user.Email) && password.Equals(user.Password) && user.Wrong_Password_Count < 5 && user.User_Status == "Y" && user.User_isLock == "N")
                 {
 
@@ -62,6 +63,7 @@ namespace GU.Controllers
 
 
                 }
+                //Email==Email, Pass== Pass but Account locked
                 else if (email.Equals(user.Email) && password.Equals(user.Password) && user.Wrong_Password_Count >= 5)
                 {
                     returnData = "AUTH_LOCK";
@@ -85,6 +87,12 @@ namespace GU.Controllers
                     }
 
                 }
+                //Email == email but Pass is not and password count 5+
+                else if (email.Equals(user.Email) && password != user.Password && user.Wrong_Password_Count >= 5)
+                {
+                    returnData = "AUTH_LOCK";
+                }
+                //Email != email, Pass != pass
                 else
                 {
                     returnData = "AUTH_NOT";
@@ -150,6 +158,20 @@ namespace GU.Controllers
                             return RedirectToAction("Index", "Home");
                         }
                     }
+
+                    string user_id_string = HttpContext.Session.GetString("User_ID");
+                    int user_id;
+
+                    try
+                    {
+                        user_id = Convert.ToInt32(user_id_string);
+                    }
+                    catch
+                    {
+                        user_id = 0;
+                    }
+
+                    _CLSR.CheckTaskDueDate(user_id, 20);
 
                     ViewData["isLogIn"] = 1;
                     //TempData["msg"] = _CLSR.GetScriptAlertPopUp("Success", "Login Successfully!", "", "S");

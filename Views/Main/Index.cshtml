@@ -35,6 +35,7 @@
 
     //NIGHT OR DAY FUNCTION
     var bgTime = "@ViewBag.Scene_Time_BG";
+    var bgDayorNight = "@ViewBag.DorN";
     var treeLevel = @Model?.Tree_Level;
     var treeIMG = "@ViewBag.TreeIMG";
 
@@ -143,7 +144,17 @@
         //TREE HP
         hp_text = this.add.text(userWidth * 0.27, userWidth * 0.045, task_complete + '/' + task_count, { fontSize: '24px', fill: 'white' });
 
-        havetoFinish_text = this.add.text(userWidth * 0.045, userWidth * 0.075, taskToday + " tasks should be completed within today.", { fontSize: '18px', fill: '#ffe790' });
+        if (bgDayorNight == "Day") {
+            havetoFinish_text = this.add.text(userWidth * 0.045, userWidth * 0.075, taskToday + " tasks should be completed within today.", { fontSize: '18px', fill: '#9FD7FF' });
+
+        }
+        else if (bgDayorNight == "Night") {
+            havetoFinish_text = this.add.text(userWidth * 0.045, userWidth * 0.075, taskToday + " tasks should be completed within today.", { fontSize: '18px', fill: '#ffe790' });
+
+        }
+        else {
+            //ERROR
+        }
 
 
         

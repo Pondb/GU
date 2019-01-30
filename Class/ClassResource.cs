@@ -144,16 +144,19 @@ namespace GU.Class
 
         }
 
-        public void CheckTaskDueDate(int user_id)
+        //Check Task is over Due Date
+        public void CheckTaskDueDate(int user_id,int hpDown)
         {
-            String cDate = _CLSR.GetDateNow("");
-            String cTime = _CLSR.GetTimeNow("");
+            String cDate = GetDateNow("");
+            String cTime = GetTimeNow("");
 
             String TimeNow = cTime.Substring(0, 4);
 
             var user = _context.User.Where(i => i.User_ID == user_id).SingleOrDefault();
             var tree = _context.Trees.Where(i => i.User_ID == user_id && i.Tree_Status == "Y").SingleOrDefault();
-            var task = _context.ToDo_Task.Where(i => i.User_ID == user_id && i.Task_isComplete == "N" && i.Task_Status == "Y" && i.Task_Parent_ID == 0).ToList();
+
+            //จะหาเจอแค่ Task ที่มีเงื่อนไขตามนี้ ถ้าเช็คครั้งต่อไปจะไม่ลบ ID ซ้ำๆ
+            var task = _context.ToDo_Task.Where(i => i.User_ID == user_id && i.Task_isComplete == "N" && i.Task_isFail == "N" && i.Task_Status == "Y" && i.Task_Parent_ID == 0).ToList();
 
 
 
@@ -161,9 +164,9 @@ namespace GU.Class
             foreach (var item in task)
             {
                 //Task over due date.
-                if (Convert.ToInt32(item.Task_Due_Date) > Convert.ToInt32(cDate))
+                if (Convert.ToInt32(cDate) > Convert.ToInt32(item.Task_Due_Date))
                 {
-                    tree.Tree_HP = tree.Tree_HP - 20;
+                    tree.Tree_HP = tree.Tree_HP - hpDown;
 
                     if (tree.Tree_HP <= 0)
                     {
@@ -173,14 +176,20 @@ namespace GU.Class
                     }
 
 
+                    //Task inComplete
+                    item.Task_isFail = "Y";
+                    item.Task_isComplete = "N";
+
+
                     _context.Update(tree);
+                    _context.Update(item);
                     _context.SaveChanges();
 
                 }
                 //On Date but Time is up.
                 else if (Convert.ToInt32(item.Task_Due_Date) == Convert.ToInt32(cDate) &&  Convert.ToInt32(TimeNow) > Convert.ToInt32(item.Task_Due_Time))
                 {
-                    tree.Tree_HP = tree.Tree_HP - 20;
+                    tree.Tree_HP = tree.Tree_HP - hpDown;
 
                     if (tree.Tree_HP <= 0)
                     {
@@ -189,7 +198,12 @@ namespace GU.Class
                         
                     }
 
+                    //Task inComplete
+                    item.Task_isFail = "Y";
+                    item.Task_isComplete = "N";
+
                     _context.Update(tree);
+                    _context.Update(item);
                     _context.SaveChanges();
                 }
                 else
@@ -206,65 +220,41 @@ namespace GU.Class
         //Main Function
 
         //EXP_UP
-        public bool Exp_Up(int User_ID,int Tree_ID,float exp_input)
+        public bool Exp_Up(int user_id,float exp_input)
         {
-            //Int32 user_current = Convert.ToInt32(HttpContext.Session.GetString("userid"));
 
-            Int32 user_current = 1;
+            var user = _context.User.Where(i => i.User_ID == user_id).SingleOrDefault();
+            var tree = _context.Trees.Where(i => i.User_ID == user_id && i.Tree_Status == "Y").SingleOrDefault();
 
-            var searchMapping = user_current + 1;
-            
-
-            if (searchMapping != 0)
+            if (user_id != 0)
             {
-                //select tree context
-                //plus exp
+                tree.Tree_EXP = tree.Tree_EXP + exp_input;
 
-                var tree_exp = 999;
-                Double exp_sum;
+                if (tree.Tree_EXP > 100)
+                {
+                    var remainEXP = tree.Tree_EXP - 100;
 
-                try
-                {
-                    exp_sum = exp_input + Convert.ToDouble(tree_exp);
-                }
-                catch
-                {
-                    exp_sum = 0;
+                    tree.Tree_EXP = remainEXP;
+                    tree.Tree_Level = tree.Tree_Level + 1;
                 }
 
-            
+                _context.Update(tree);
+                _context.SaveChanges();
 
-                if (exp_sum >= 1000)
-                {
-                    //level up and the remaining to add
-                    //level + 1
-                    Double remaining_exp = 0;
-                    remaining_exp = exp_sum - 1000;
+                return true;
 
-                    //Update EXP Field with Remaining
 
-                    return true;
 
-                }
-                else if (exp_sum < 1000)
-                {
-                    //Select EXP + exp_sum;
-                    return true;
-                }
-                else
-                {
-                    //ERROR
-                    return false;
-                }
 
-            
-                
             }
             else
             {
+                //ERROR USER ID == 0
                 return false;
-
             }
+            
+            
+
 
             
            

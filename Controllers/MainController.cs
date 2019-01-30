@@ -35,7 +35,7 @@ namespace GU.Controllers
 
 
 
-
+        //MainController : PhaserJS ,Tree
         public IActionResult Index()
         {
             string user_id_string = HttpContext.Session.GetString("User_ID");
@@ -48,8 +48,7 @@ namespace GU.Controllers
             catch
             {
                 user_id = 0;
-                //TempData["msg"] = _CLSR.GetScriptAlertPopUp("Error", "E_UserID = 0", "", "E");
-                //return RedirectToAction("Index", "Home");
+               
             }
 
             var TimeNow = Convert.ToInt32(_CLSR.GetTimeNow(""));
@@ -57,12 +56,15 @@ namespace GU.Controllers
             if (TimeNow >= 000000 && TimeNow <= 060000 || TimeNow > 180000 && TimeNow <= 240000)
             {
                 ViewBag.Scene_Time_BG = "../assets/GU_Game/img/PNG/backgroud/pcbackgroud-night.png";
-               
+                ViewBag.DorN = "Night";
+
+
             }
             else
             {
                 ViewBag.Scene_Time_BG = "../assets/GU_Game/img/PNG/backgroud/pcbackgroud-day.png";
-                
+                ViewBag.DorN = "Day";
+
             }
 
             if (user_id != 0)
@@ -78,6 +80,7 @@ namespace GU.Controllers
                 .Include(i => i.Tree_Type)
                 .Where(c => c.User_ID == user_id && c.Tree_Status == "Y").SingleOrDefault();
 
+                //ต้องเพิ่ม ไม่นับ Task ที่เฟลไปแล้ว
                 var task_all_count = _context.ToDo_Task.Where(i => i.User_ID == user_id && i.Task_Parent_ID == 0 && i.Task_Status == "Y").Count();
                 var task_complete_count = _context.ToDo_Task.Where(i => i.User_ID == user_id && i.Task_isComplete == "Y" &&  i.Task_Parent_ID == 0 && i.Task_Status == "Y").Count();
 
