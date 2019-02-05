@@ -178,7 +178,7 @@ using GU.Models;
 ");
             EndContext();
             BeginContext(2401, 5962, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9392252ab8eb400da18812b3963bd63d", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "da1ac0c354054bfc8727f7675f0e9965", async() => {
                 BeginContext(2455, 245, true);
                 WriteLiteral("\r\n\r\n    <div class=\"row\">\r\n        <div class=\"col-md-12\">\r\n\r\n            <h1>How about your targets?.</h1>\r\n            <br />\r\n\r\n            <table width=\"100%\" class=\"table table-striped table-bordered table-hover nowrap\" id=\"task_Table\">\r\n\r\n");
                 EndContext();
@@ -292,7 +292,7 @@ using GU.Models;
                 WriteLiteral("                                        ");
                 EndContext();
                 BeginContext(4825, 346, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8df72208d0ca41d7a995caa594ad3a1b", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a8760136023742c787ff9b9382115290", async() => {
                     BeginContext(4878, 289, true);
                     WriteLiteral(@"
                                             <button type=""button"" class=""btn btn-success btn-outline btn-circle"">
@@ -416,7 +416,7 @@ using GU.Models;
                 WriteLiteral("                                        ");
                 EndContext();
                 BeginContext(6843, 346, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "609ddc57ad7f41f599716b4de1c0c35b", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "fadcd4c759ba48d6b85167cd77f50325", async() => {
                     BeginContext(6896, 289, true);
                     WriteLiteral(@"
                                             <button type=""button"" class=""btn btn-success btn-outline btn-circle"">
