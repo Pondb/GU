@@ -301,7 +301,7 @@
         <div class="modal fade" id="modal_login" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header" >
                         @*<h4 class="modal-title">Login</h4>*@
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
 
@@ -335,10 +335,10 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <a asp-area="" asp-controller="Users" asp-action="Create">Sign up</a>
+                                    <a asp-area="" asp-controller="Users" asp-action="Create"><small>Sign up</small></a>
 
                                 </div>
-                                <button class="btn btn-primary" id="submit_login" onclick="auth_login()">Submit</button>
+                                <button class="btn btn-info" id="submit_login" onclick="auth_login()">Submit</button>
                             </div>
                             <div class="col-md-1">
 
@@ -349,40 +349,61 @@
                         <br />
                     </div>
 
-                    <div class="modal-footer">
+                    <div class="modal-footer" >
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
         </div>
-        <hr />
+
+        <br />
+        <br />
+        
         <footer>
-            <p>&copy; 2018 - GROW UP</p>
+
+           
+            <div class="row" style="background-color:#332421">
+                <div class="col-md-1"></div>
+                <div class="col-md-10" style="color:#7D8170">
+
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-10">
+                            <br />
+                            <br />
+                            <br />
+                            Growyp Copyright 2019
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                        </div>
+                        <div class="col-md-1">
+                            <br />
+                            <br />
+                            <br />
+                            <a href="#" class="social-icon w-inline-block"><img src="~/img/growup/Footer/Mail.png" width="35" alt=""></a>
+                            <a href="#" class="social-icon w-inline-block"><img src="~/img/growup/Footer/Facebook.png" width="35" alt=""></a>
+                            
+                        </div>
+
+                    </div>
+                    
+                </div>
+                <div class="col-md-1">
+                    <div class="row">
+                        <div class="col-md-12">
+                           
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
         </footer>
 
 
     </div>
 
-    @*<environment include="Development">
-            <script src="~/lib/jquery/dist/jquery.js"></script>
-            <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-            <script src="~/js/site.js" asp-append-version="true"></script>
-        </environment>
-        <environment exclude="Development">
-            <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
-                    asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                    asp-fallback-test="window.jQuery"
-                    crossorigin="anonymous"
-                    integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT">
-            </script>
-            <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
-                    asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
-                    asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
-                    crossorigin="anonymous"
-                    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
-            </script>
-            <script src="~/js/site.min.js" asp-append-version="true"></script>
-        </environment>*@
 
     @RenderSection("Scripts", required: false)
 

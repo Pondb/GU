@@ -674,7 +674,7 @@ string InsertTimeToDisplay(string timeIn)
                         
 
                         @*<table width="100%" class="table table-striped table-bordered table-hover nowrap" id="task_Table">*@
-                        <table width="100%" class="table table-hover" id="task_Table">
+                        <table width="100%" class="table table-hover table-striped" id="task_Table">
 
                             @*//Search*@
 
@@ -797,6 +797,12 @@ string InsertTimeToDisplay(string timeIn)
                                                             <i class="fa fa-check"></i>
                                                         </button>
                                                     </a>
+
+                                                    <a asp-action="Remove_Task" asp-route-id="@item.Task_ID">
+                                                        <button type="button" class="btn btn-outline-danger btn-circle">
+                                                            <i class="fa fa-remove"></i>
+                                                        </button>
+                                                    </a>
                                                 }
 
                                             </td>
@@ -846,11 +852,11 @@ string InsertTimeToDisplay(string timeIn)
                                                     }
                                                     else
                                                     {
-                                                        <a asp-action="Remove_Task" asp-route-id="@item.Task_ID">
+                                                        @*<a asp-action="Remove_Task" asp-route-id="@item.Task_ID">
                                                             <button type="button" class="btn btn-outline-danger btn-circle">
                                                                 <i class="fa fa-remove"></i>
                                                             </button>
-                                                        </a>
+                                                        </a>*@
                                                     }
                                                 }
                                             </td>

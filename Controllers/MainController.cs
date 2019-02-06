@@ -81,7 +81,7 @@ namespace GU.Controllers
                 .Where(c => c.User_ID == user_id && c.Tree_Status == "Y").SingleOrDefault();
 
                 //ต้องเพิ่ม ไม่นับ Task ที่เฟลไปแล้ว
-                var task_all_count = _context.ToDo_Task.Where(i => i.User_ID == user_id && i.Task_Parent_ID == 0 && i.Task_Status == "Y").Count();
+                var task_all_count = _context.ToDo_Task.Where(i => i.User_ID == user_id && i.Task_Parent_ID == 0 && i.Task_Status == "Y" && i.Task_isFail == "N").Count();
                 var task_complete_count = _context.ToDo_Task.Where(i => i.User_ID == user_id && i.Task_isComplete == "Y" &&  i.Task_Parent_ID == 0 && i.Task_Status == "Y").Count();
 
                 var task = _context.ToDo_Task.Where(i => i.User_ID == user_id && i.Task_isComplete == "N" && i.Task_Status == "Y" && i.Task_Parent_ID == 0).ToList();
