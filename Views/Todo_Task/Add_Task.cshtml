@@ -185,6 +185,7 @@ string InsertTimeToDisplay(string timeIn)
 
         $('#task_Table').DataTable({
             responsive: true,
+            "order": [[3, 'dsc']],
             "columnDefs": [
                 {
                     "targets": [3],
@@ -193,7 +194,7 @@ string InsertTimeToDisplay(string timeIn)
                 ,
                 {
                     "targets": [4],
-                    "visible": false
+                    "visible": true
                 }
 
             ]
@@ -465,14 +466,17 @@ string InsertTimeToDisplay(string timeIn)
 <p id="alert_message"></p>
 
 <div class="row">
-    <div class="col-md-12">
+
+    <div class="col-md-1"></div>
+
+    <div class="col-md-10">
 
         <!-- daily task -->
         <div class="row">
             <div class="col-md-12">
                 <h1>Add Task</h1>
                 <br />
-                <button data-toggle="collapse" data-target="#dailyTask" class="btn btn-outline-primary btn-block " id="btnDaily">Daily Task</button>
+                <button data-toggle="collapse" data-target="#dailyTask" class="btn btn-success btn-block " id="btnDaily">Daily Task</button>
 
                 <div id="dailyTask" class="collapse">
                     <div class="row">
@@ -518,7 +522,7 @@ string InsertTimeToDisplay(string timeIn)
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label>Description:</label>
+                                        <label>Add Note:</label>
                                         <textarea name="d_Task_Description" type="text" class="form-control" rows="5" id="d_Task_Description"></textarea>
                                     </div>
                                 </div>
@@ -548,7 +552,7 @@ string InsertTimeToDisplay(string timeIn)
         <!-- normal task -->
         <div class="row">
             <div class="col-md-12">
-                <button data-toggle="collapse" data-target="#normalTask" class="btn btn-outline-secondary btn-block">Normal Task</button>
+                <button data-toggle="collapse" data-target="#normalTask" class="btn btn-secondary btn-block">Normal Task</button>
 
                 <div id="normalTask" class="collapse">
                     <div class="row">
@@ -603,7 +607,7 @@ string InsertTimeToDisplay(string timeIn)
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label>Description:</label>
+                                        <label>Add Note:</label>
                                         <textarea name="Task_Description" type="text" class="form-control" rows="5" id="Task_Description"></textarea>
                                     </div>
                                 </div>
@@ -754,7 +758,8 @@ string InsertTimeToDisplay(string timeIn)
                                             </td>
 
                                             <td style="text-align:center">
-                                                <a href="" data-toggle="tooltip" data-placement="top" title="@item.Task_Description">Description</a>
+                                                @*<a href="" data-toggle="tooltip" data-placement="top" title="@item.Task_Description">Description</a>*@
+                                                @item.Task_Description
                                             </td>
 
                                             <td style="text-align:center">
@@ -781,7 +786,7 @@ string InsertTimeToDisplay(string timeIn)
 
 
                                         </tr>
-                                    }
+                                    } //Normal 
                                     else if (item.Task_isComplete == "N" && item.Task_isFail == "N")
                                     {
                                         <tr>
@@ -829,7 +834,8 @@ string InsertTimeToDisplay(string timeIn)
                                             </td>
 
                                             <td style="text-align:center">
-                                                <a href="#" data-toggle="tooltip" data-placement="top" title="Description">@item.Task_Description</a>
+                                                @*<a href="#" data-toggle="tooltip" data-placement="top" title="@item.Task_Description">Note</a>*@
+                                                @item.Task_Description
                                             </td>
 
                                             <td style="text-align:center">
@@ -859,7 +865,10 @@ string InsertTimeToDisplay(string timeIn)
 
                                         <tr class="table-danger">
                                             <td style="text-align:center">
-                                                <font style="color:red">Failed</font>
+                                                @*<font style="color:red"><b>Failed</b></font>*@
+                                                <button type="button" class="btn btn-danger btn-circle">
+                                                    <i class="fa fa-remove"></i>
+                                                </button>
 
                                             </td>
 
@@ -895,12 +904,13 @@ string InsertTimeToDisplay(string timeIn)
 
                                             </td>
                                             <td style="text-align:center">
-                                                <a href="#" data-toggle="tooltip" data-placement="top" title="Description">@item.Task_Description</a>
+                                                @*<a href="#" data-toggle="tooltip" data-placement="top" title="Description">@item.Task_Description</a>*@
+                                                @item.Task_Description
                                             </td>
 
                                             <td style="text-align:center">
 
-                                                <font style="color:red">You have failed this city.</font>
+                                                @*<font style="color:red">You have failed this city.</font>*@
                                             </td>
 
 
@@ -960,6 +970,8 @@ string InsertTimeToDisplay(string timeIn)
      
 
     </div>
+
+    <div class="col-md-1"></div>
 </div>
 
 
