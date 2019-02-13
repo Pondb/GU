@@ -724,7 +724,7 @@ using GU.Models;
             WriteLiteral("             <select id=\"showTask\" class=\"form-control\">\r\n                                        ");
             EndContext();
             BeginContext(18940, 43, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "420d3ecd80ee445f8703789b7cda836c", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8c8994ff9c0249e0b80c061c93bffe73", async() => {
                 BeginContext(18970, 4, true);
                 WriteLiteral("Hide");
                 EndContext();
@@ -749,7 +749,7 @@ using GU.Models;
             WriteLiteral("\r\n                                        ");
             EndContext();
             BeginContext(19025, 34, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f080e12f4b7e48dfb42335fc0261d2dc", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "984518c7b9b345999c93f351c7768875", async() => {
                 BeginContext(19046, 4, true);
                 WriteLiteral("Show");
                 EndContext();
@@ -780,7 +780,7 @@ using GU.Models;
                                         ");
             EndContext();
             BeginContext(19527, 40, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "566149e850c54d00bb5ab581c2540abb", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f6a873b34d1b466992f0827b5d676667", async() => {
                 BeginContext(19554, 4, true);
                 WriteLiteral("Hide");
                 EndContext();
@@ -805,7 +805,7 @@ using GU.Models;
             WriteLiteral("\r\n                                        ");
             EndContext();
             BeginContext(19609, 31, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d8e42280c2c048febf5c5f0b4286d631", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "b5d8745503b740b68c93488bb0f5c03c", async() => {
                 BeginContext(19627, 4, true);
                 WriteLiteral("Show");
                 EndContext();
@@ -991,7 +991,7 @@ using GU.Models;
             WriteLiteral("                                                        ");
             EndContext();
             BeginContext(24555, 410, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ae871f2ce5124788afd10f7deca4a7d7", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "b3ce9504bc82463c9693b9e74a960721", async() => {
                 BeginContext(24612, 349, true);
                 WriteLiteral(@"
                                                             <button type=""button"" class=""btn btn-outline-danger btn-circle"">
@@ -1053,7 +1053,7 @@ using GU.Models;
             WriteLiteral("                                                    ");
             EndContext();
             BeginContext(25599, 399, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "540a3be46f1e416fb80f98d282c62d41", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a49f0aa4afe64281af1e964f26091b47", async() => {
                 BeginContext(25657, 337, true);
                 WriteLiteral(@"
                                                         <button type=""button"" class=""btn btn-success btn-outline btn-circle"">
@@ -1095,7 +1095,7 @@ using GU.Models;
             WriteLiteral("                                                    ");
             EndContext();
             BeginContext(26054, 394, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "50cc6d0234da45c3a346324ef73df614", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "964c3c1b3a0d45efa548c889baa77f71", async() => {
                 BeginContext(26111, 333, true);
                 WriteLiteral(@"
                                                         <button type=""button"" class=""btn btn-outline-danger btn-circle"">

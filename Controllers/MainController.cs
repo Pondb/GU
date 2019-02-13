@@ -53,19 +53,36 @@ namespace GU.Controllers
 
             var TimeNow = Convert.ToInt32(_CLSR.GetTimeNow(""));
 
+            //Flat BG
+            //if (TimeNow >= 000000 && TimeNow <= 060000 || TimeNow > 180000 && TimeNow <= 240000)
+            //{
+            //    ViewBag.Scene_Time_BG = "../assets/GU_Game/img/PNG/backgroud/pcbackgroud-night.png";
+            //    ViewBag.DorN = "Night";
+
+
+            //}
+            //else
+            //{
+            //    ViewBag.Scene_Time_BG = "../assets/GU_Game/img/PNG/backgroud/pcbackgroud-day.png";
+            //    ViewBag.DorN = "Day";
+
+            //}
+
+            //ISO BG
             if (TimeNow >= 000000 && TimeNow <= 060000 || TimeNow > 180000 && TimeNow <= 240000)
             {
-                ViewBag.Scene_Time_BG = "../assets/GU_Game/img/PNG/backgroud/pcbackgroud-night.png";
+                ViewBag.Scene_Time_BG = "../assets/GU_Game/img/BG/Night_BG.png";
                 ViewBag.DorN = "Night";
 
 
             }
             else
             {
-                ViewBag.Scene_Time_BG = "../assets/GU_Game/img/PNG/backgroud/pcbackgroud-day.png";
+                ViewBag.Scene_Time_BG = "../assets/GU_Game/img/BG/Day_BG.png";
                 ViewBag.DorN = "Day";
 
             }
+
 
             if (user_id != 0)
             {

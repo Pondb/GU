@@ -61,8 +61,10 @@
 
     var config = {
         type: Phaser.AUTO,
-        width: userWidth,
-        height: userHeight,
+        //width: userWidth,
+        //height: userHeight,
+        width: 1920,
+        height: 1080,
         physics: {
             default: 'arcade',
             arcade: {
@@ -82,7 +84,7 @@
 
     var game = new Phaser.Game(config);
 
-    
+    var treeBlock;
 
 
     function resize() {
@@ -106,7 +108,11 @@
     function preload() {
 
         //ได้แล้ววว ต้องใช้ .. นำหน้าก่อน
+        //this.load.image('background', bgTime);
         this.load.image('background', bgTime);
+
+        //Plain Ground
+        this.load.image('plain_field', '../assets/GU_Game/img/PlainGround/Plain_Field.png');
 
 
         this.load.image('trees', treeIMG);
@@ -126,31 +132,83 @@
         //window.addEventListener('resize', resize);
         //resize();
 
-        this.add.image(userWidth * 0.5, userHeight * 0.65, 'background').setScale(1);
+
+        //Flat Tree Design
+        //this.add.image(userWidth * 0.5, userHeight * 0.65, 'background').setScale(1);
         
-        this.add.image(userWidth * 0.37, userWidth * 0.23, 'trees').setScale(0.75);
+        //this.add.image(userWidth * 0.37, userWidth * 0.23, 'trees').setScale(0.75);
           
-        this.add.image(userWidth * 0.05, userWidth * 0.05, 'coin_icon').setScale(0.05);
-        //this.add.image(userWidth * 0.14, userWidth * 0.05, 'task_icon').setScale(0.05);
-        this.add.image(userWidth * 0.25, userWidth * 0.05, 'task_icon').setScale(0.05);
+        //this.add.image(userWidth * 0.05, userWidth * 0.05, 'coin_icon').setScale(0.05);
+        ////this.add.image(userWidth * 0.14, userWidth * 0.05, 'task_icon').setScale(0.05);
+        //this.add.image(userWidth * 0.25, userWidth * 0.05, 'task_icon').setScale(0.05);
 
 
-        //TREE LEVEL
-        coin_text = this.add.text(userWidth * 0.07, userWidth * 0.045, 'LV ' + treeLevel, { fontSize: '24px', fill: 'white' });
+        //Isometric Tree Design
+        this.add.image(0, 0, 'background').setOrigin(0, 0);
+        //Test Fine
+        //treeBlock = this.physics.add.staticGroup();
 
-        //Task/Complete_Task
-        task_text = this.add.text(userWidth * 0.12, userWidth * 0.045,  "HP:" + tree_hp + '/100', { fontSize: '24px', fill: 'white' });
+        //treeBlock.create(userWidth * 0.5, userHeight * 0.6, 'plain_field').setScale(0.6).refreshBody();
+        //treeBlock.create(userWidth * 0.5, userHeight * 0.5, 'trees').setScale(1).refreshBody();
 
-        //TREE HP
-        hp_text = this.add.text(userWidth * 0.27, userWidth * 0.045, task_complete + '/' + task_count, { fontSize: '24px', fill: 'white' });
+        treeBlock = this.physics.add.staticGroup();
+
+        treeBlock.create(960, 600, 'plain_field').setScale(1).refreshBody();
+        treeBlock.create(960, 540, 'trees').setScale(1).refreshBody();
+
+
+        this.add.image(80, 80, 'coin_icon').setScale(0.08);
+
+        this.add.image(640,80, 'task_icon').setScale(0.08);
+
+
+        
+
 
         if (bgDayorNight == "Day") {
-            havetoFinish_text = this.add.text(userWidth * 0.045, userWidth * 0.075, taskToday + " tasks should be completed within today.", { fontSize: '18px', fill: '#9FD7FF' });
+
+            //If task != 0
+            if (taskToday == 1) {
+                havetoFinish_text = this.add.text(130, 160, taskToday + " task should be completed within today.", { fontSize: '36px', fill: '#ffe790' });
+            }
+            else if (taskToday != 0) {
+                havetoFinish_text = this.add.text(130, 160, taskToday + " tasks should be completed within today.", { fontSize: '36px', fill: '#ffe790' });
+            }
+            else {
+                havetoFinish_text = this.add.text(130, 160, "You don't have any task today.", { fontSize: '36px', fill: '#ffe790' });
+            }
+
+            //TREE LEVEL
+            level_text = this.add.text(130, 65, 'LV ' + treeLevel, { fontSize: '48px', fill: 'gray' });
+
+            //Task/Complete_Task
+            hp_text = this.add.text(300, 65, "HP:" + tree_hp + '/100', { fontSize: '48px', fill: 'gray' });
+
+            //TREE HP
+            task_text = this.add.text(690, 65, task_complete + '/' + task_count, { fontSize: '48px', fill: 'gray' });
 
         }
         else if (bgDayorNight == "Night") {
-            havetoFinish_text = this.add.text(userWidth * 0.045, userWidth * 0.075, taskToday + " tasks should be completed within today.", { fontSize: '18px', fill: '#ffe790' });
+            
+            //If task != 0
+            if (taskToday == 1) {
+                havetoFinish_text = this.add.text(130,160, taskToday + " task should be completed within today.", { fontSize: '36px', fill: '#ffe790' });
+            }
+            else if (taskToday != 0) {
+                havetoFinish_text = this.add.text(130,160, taskToday + " tasks should be completed within today.", { fontSize: '36px', fill: '#ffe790' });
+            }
+            else {
+                havetoFinish_text = this.add.text(130,160, "You don't have any task today.", { fontSize: '36px', fill: '#ffe790' });
+            }
 
+            //TREE LEVEL
+            level_text = this.add.text(130, 65, 'LV ' + treeLevel, { fontSize: '48px', fill: 'white' });
+
+            //Task/Complete_Task
+            hp_text = this.add.text(300, 65, "HP:" + tree_hp + '/100', { fontSize: '48px', fill: 'white' });
+
+            //TREE HP
+            task_text = this.add.text(690, 65, task_complete + '/' + task_count, { fontSize: '48px', fill: 'white' });
         }
         else {
             //ERROR
@@ -180,9 +238,14 @@
     if (user_id != null)
     {
         <div class="row" style="color:#ffe790">
-            <div id="phaser-container">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                <div id="phaser-container">
 
+                </div>
             </div>
+            <div class="col-md-1"></div>
+            
         </div>
         
     }

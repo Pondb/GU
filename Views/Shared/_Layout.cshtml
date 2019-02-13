@@ -276,7 +276,7 @@
 
     <div class="container-fluid body-content">
 
-        
+
 
 
         @RenderBody()
@@ -295,13 +295,61 @@
 
 
 
+
+
+        @*<br />
+        <br />*@
+
+        <footer>
+
+
+            <div class="row" style="background-color:#332421">
+                <div class="col-md-1"></div>
+                <div class="col-md-10" style="color:#7D8170">
+
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-10">
+                            <br />
+                            <br />
+                            <br />
+                            Growyp Copyright 2019
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                        </div>
+                        <div class="col-md-1">
+                            <br />
+                            <br />
+                            <br />
+                            <a href="#" class="social-icon w-inline-block"><img src="~/img/growup/Footer/Mail.png" width="35" alt=""></a>
+                            <a href="#" class="social-icon w-inline-block"><img src="~/img/growup/Footer/Facebook.png" width="35" alt=""></a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="col-md-1">
+                    <div class="row">
+                        <div class="col-md-12">
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+
         <!--MODAL-->
         <button type="button" class="btn btn-info btn-lg" id="modalOpen" data-toggle="modal" data-target="#modal_login">Open Modal</button>
         <!-- Modal -->
         <div class="modal fade" id="modal_login" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header" >
+                    <div class="modal-header">
                         @*<h4 class="modal-title">Login</h4>*@
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
 
@@ -311,7 +359,7 @@
                         @*@HttpContext.Current.Session["Username"].ToString();*@
 
                         @*@using (Html.BeginForm("Login", "Home", FormMethod.Post, new { @class = "ui large form" }))
-                            {*@
+                        {*@
                         <div class="row">
                             <div class="col-md-1">
 
@@ -349,57 +397,12 @@
                         <br />
                     </div>
 
-                    <div class="modal-footer" >
+                    <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
         </div>
-
-        <br />
-        <br />
-        
-        <footer>
-
-           
-            <div class="row" style="background-color:#332421">
-                <div class="col-md-1"></div>
-                <div class="col-md-10" style="color:#7D8170">
-
-                    <div class="row">
-                        <div class="col-md-1"></div>
-                        <div class="col-md-10">
-                            <br />
-                            <br />
-                            <br />
-                            Growyp Copyright 2019
-                            <br />
-                            <br />
-                            <br />
-                            <br />
-                        </div>
-                        <div class="col-md-1">
-                            <br />
-                            <br />
-                            <br />
-                            <a href="#" class="social-icon w-inline-block"><img src="~/img/growup/Footer/Mail.png" width="35" alt=""></a>
-                            <a href="#" class="social-icon w-inline-block"><img src="~/img/growup/Footer/Facebook.png" width="35" alt=""></a>
-                            
-                        </div>
-
-                    </div>
-                    
-                </div>
-                <div class="col-md-1">
-                    <div class="row">
-                        <div class="col-md-12">
-                           
-                            
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </footer>
 
 
     </div>
