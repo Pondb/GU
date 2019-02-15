@@ -131,6 +131,55 @@ namespace GU.Controllers
            
         }
 
+
+        //Add_Task Views.
+        public IActionResult Task_Statistic()
+        {
+            string user_id_string = HttpContext.Session.GetString("User_ID");
+            int user_id;
+
+            if (user_id_string != null)
+            {
+                try
+                {
+                    user_id = Convert.ToInt32(user_id_string);
+                }
+                catch
+                {
+                    user_id = 0;
+                    return RedirectToAction("Index", "Home");
+                }
+
+            
+
+                int task_count_all = _context.ToDo_Task.Where(i => i.User_ID == user_id && i.Task_Parent_ID == 0).Count();
+                int task_count_completed = _context.ToDo_Task.Where(i => i.User_ID == user_id && i.Task_Parent_ID == 0 && i.Task_isComplete == "Y").Count();
+                int task_count_failed = _context.ToDo_Task.Where(i => i.User_ID == user_id && i.Task_Parent_ID == 0 && i.Task_isFail == "Y").Count();
+                int task_count_normal = _context.ToDo_Task.Where(i => i.User_ID == user_id && i.Task_Parent_ID == 0 && i.Task_isComplete == "N" && i.Task_isFail =="N").Count();
+
+                ViewBag.task_count_all = task_count_all;
+                ViewBag.task_count_completed = task_count_completed;
+                ViewBag.task_count_failed = task_count_failed;
+                ViewBag.task_count_normal = task_count_normal;
+
+                var task = _context.ToDo_Task.Where(i => i.User_ID == user_id && i.Task_Parent_ID == 0);
+
+                _CLSR.CheckTaskDueDate(user_id, 20);
+
+
+
+
+                return View(task.ToList());
+            }
+            else
+            {
+                TempData["msg"] = _CLSR.GetScriptAlertPopUp("Warning", "You have not login yet.", "", "D");
+                return RedirectToAction("Index", "Home");
+            }
+
+
+        }
+
         // Task to List and JSON.
         //public ActionResult GetTaskList()
         //{
@@ -154,8 +203,8 @@ namespace GU.Controllers
 
         //}
 
-        
-         //Add Task to table.
+
+        //Add Task to table.
         [HttpPost]
         public ActionResult Add([Bind("Task_ID, Task_Parent_ID, User_ID, Task_Name, Task_Due_Date, Task_Due_Time, Task_Description, Task_isFocus, Task_Create_Date, Task_Update_Date, Task_Status, Task_isComplete")] ToDo_Task ToDo_Task)
         {

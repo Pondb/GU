@@ -1,0 +1,120 @@
+﻿@{
+    ViewData["Title"] = "Statistic";
+}
+
+<script>
+
+    google.charts.load('current', { 'packages': ['corechart'] });
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+
+
+        var completed = @ViewBag.task_count_completed;
+        var normal = @ViewBag.task_count_normal;
+        var failed = @ViewBag.task_count_failed;
+        var all_task = @ViewBag.task_count_all;
+
+        var data = google.visualization.arrayToDataTable([
+            ['Task', 'Hours per Day'],
+            ['Completed', completed],
+            ['Failed', failed],
+            ['Planning', normal]
+        ]);
+
+        var options = {
+            title: 'My Task',
+            colors: ['#109618', '#DC3912', '#3366CC'],
+            pieHole: 0.4,
+            'width': 'auto', 'height': 'auto',
+            fontSize: 16
+
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+    }
+
+
+
+   
+
+</script>
+
+
+<div class="row">
+    
+    <br />
+    <br />
+</div>
+
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+
+        <div class="row">
+
+            
+            
+            <div class="col-md-12">
+                <h1 class="display-4">Statistic</h1>
+                <hr />
+
+                <div id="chart_wrap">
+                    <div id="piechart">
+
+                    </div>
+
+                </div>
+               
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Number of Task</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="table-primary">
+                            <td style="text-align:center"><b style="color:#3366CC">Planning</b></td>
+                            <td style="text-align:center"><b style="color:#3366CC">@ViewBag.task_count_normal</b></td>
+                            <td style="text-align:center"><b>@ViewBag.task_count_all</b></td>
+                        </tr>
+                        <tr class="table-success">
+                            <td style="text-align:center"><b style="color:#109618">Completed</b></td>
+                            <td style="text-align:center"><b style="color:#109618">@ViewBag.task_count_completed</b></td>
+                            <td style="text-align:center"><b>@ViewBag.task_count_all</b></td>
+                        </tr>
+                        <tr class="table-danger">
+                            <td style="text-align:center"><b style="color:red">Failed</b></td>
+                            <td style="text-align:center"><b style="color:red">@ViewBag.task_count_failed</b></td>
+                            <td style="text-align:center"><b>@ViewBag.task_count_all</b></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+
+               
+
+                <hr />
+                <br />
+                <br />
+            </div>
+        </div>
+
+
+
+    </div>
+    <div class="col-md-1"></div>
+</div>
+
+
+
+
+

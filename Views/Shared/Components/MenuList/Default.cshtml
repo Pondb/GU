@@ -9,80 +9,70 @@
 
 
 @*<nav class="navbar navbar-expand-sm bg-dark navbar-fixed-top">*@
-<nav class="navbar navbar-expand-sm navbar-dark" style="background-color: #1C1408">
+<nav class="navbar navbar-expand-sm navbar-dark fixed-top" style="background-color: #1C1408">
     <div class="container">
 
 
+        <!-- Toggler/collapsibe Button -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
 
 
+            <!-- Brand -->
 
-        <!-- Brand -->
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/img/growup/Brand.png" width="25%" />&nbsp; GROWYP</a>
 
-        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/img/growup/Brand.png" width="25%" />&nbsp; GROWYP</a>
-
-        <!-- Links -->
-        <ul class="navbar-nav">
+            <!-- Links -->
+            <ul class="navbar-nav">
 
 
-            @{
-                if (user_id != null)
-                {
-                    <li class="nav-item">
-                        <a asp-area="" asp-controller="Todo_Task" asp-action="Add_Task" class="nav-link">Tasks</a>
-                    </li>
-                    <li class="nav-item">
-                        <a asp-area="" asp-controller="Main" asp-action="Index" class="nav-link">Your Trees</a>
-                    </li>
+                @{
+                    if (user_id != null)
+                    {
+                        <li class="nav-item">
+                            <a asp-area="" asp-controller="Todo_Task" asp-action="Task_Statistic" class="nav-link">Statistic</a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-area="" asp-controller="Todo_Task" asp-action="Add_Task" class="nav-link">Tasks</a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-area="" asp-controller="Main" asp-action="Index" class="nav-link">Trees</a>
+                        </li>
+                    }
+                    else
+                    {
+
+                    }
                 }
-                else
-                {
-
-                }
-            }
 
 
-            <li class="nav-item">
-                <a asp-area="" asp-controller="Home" asp-action="About" class="nav-link">About</a>
-            </li>
-            <li class="nav-item">
-                <a asp-area="" asp-controller="Home" asp-action="Contact" class="nav-link">Contact</a>
-            </li>
+                <li class="nav-item">
+                    <a asp-area="" asp-controller="Home" asp-action="About" class="nav-link">About</a>
+                </li>
+                <li class="nav-item">
+                    <a asp-area="" asp-controller="Home" asp-action="Contact" class="nav-link">Contact</a>
+                </li>
 
-            <li class="nav-link">
+                <li class="nav-link">
 
-            </li>
+                </li>
 
-            @*<li class="nav-item">
-            <a class="nav-link"> | </a>
-        </li>*@
+                @*<li class="nav-item">
+                    <a class="nav-link"> | </a>
+                </li>*@
 
 
 
 
-            @{
-                if (user_id != null)
-                {
-                    <!-- User Dropdown -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-                            @{
-
-
-                                if (ViewBag.User != null)
-                                {
-
-                                    List<GU.Models.User> UserInfo = ViewBag.User;
-
-                                    foreach (var m in UserInfo)
-                                    {
-                                        @m.Email
-
-                                    }
-                                }
-                            }
-                        </a>
-                        <div class="dropdown-menu">
-                            <a asp-area="" asp-controller="Users" asp-action="Edit" asp-route-id="@user_id" class="dropdown-item">
+                @{
+                    if (user_id != null)
+                    {
+                        <!-- User Dropdown -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
                                 @{
 
 
@@ -93,68 +83,86 @@
 
                                         foreach (var m in UserInfo)
                                         {
-                                            @m.First_Name
+                                            @m.Email
 
                                         }
                                     }
-
-
-                                } @{
-
-
-                                    if (ViewBag.User != null)
-                                    {
-
-                                        List<GU.Models.User> UserInfo = ViewBag.User;
-
-                                        foreach (var m in UserInfo)
-                                        {
-                                            @m.Last_Name
-
-                                        }
-                                    }
-
-
-
-
                                 }
                             </a>
-                            <a asp-area="" asp-controller="Users" asp-action="ChangePassword" class="dropdown-item">Change Password</a>
-                            <a asp-area="" asp-controller="Home" asp-action="Logout" class="dropdown-item">Log out</a>
+                            <div class="dropdown-menu">
+                                <a asp-area="" asp-controller="Users" asp-action="Edit" asp-route-id="@user_id" class="dropdown-item">
+                                    @{
 
-                        </div>
-                    </li>
+
+                                        if (ViewBag.User != null)
+                                        {
+
+                                            List<GU.Models.User> UserInfo = ViewBag.User;
+
+                                            foreach (var m in UserInfo)
+                                            {
+                                                @m.First_Name
+
+                                            }
+                                        }
+
+
+                                    } @{
+
+
+                                        if (ViewBag.User != null)
+                                        {
+
+                                            List<GU.Models.User> UserInfo = ViewBag.User;
+
+                                            foreach (var m in UserInfo)
+                                            {
+                                                @m.Last_Name
+
+                                            }
+                                        }
+
+
+
+
+                                    }
+                                </a>
+                                <a asp-area="" asp-controller="Users" asp-action="ChangePassword" class="dropdown-item">Change Password</a>
+                                <a asp-area="" asp-controller="Home" asp-action="Logout" class="dropdown-item">Log out</a>
+
+                            </div>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+
+                            <a asp-area="" asp-controller="Users" asp-action="Create" class="btn btn-info">Sign up</a>
+                        </li>
+
+                        <li class="nav-link">
+
+                        </li>
+
+                        @*<li class="nav-item" onclick="openLoginModal()">
+                            <a class="nav-link" href="#">Login</a>
+                        </li>*@
+
+                        <li class="nav-item" onclick="openLoginModal()">
+                            <a class="btn btn-success" href="#">Login</a>
+                        </li>
+
+
+
+
+                    }
+
                 }
-                else
-                {
-                    <li class="nav-item">
-
-                        <a asp-area="" asp-controller="Users" asp-action="Create" class="btn btn-info">Sign up</a>
-                    </li>
-
-                    <li class="nav-link">
-
-                    </li>
-
-                    @*<li class="nav-item" onclick="openLoginModal()">
-                    <a class="nav-link" href="#">Login</a>
-                </li>*@
-
-                    <li class="nav-item" onclick="openLoginModal()">
-                        <a class="btn btn-success" href="#">Login</a>
-                    </li>
 
 
 
 
-                }
-
-            }
-
-
-
-
-        </ul>
+            </ul>
 
 
 
@@ -165,8 +173,14 @@
 
 
 
+
+        </div>
 
     </div>
 </nav>
+
+<br />
+<br />
+
 
 

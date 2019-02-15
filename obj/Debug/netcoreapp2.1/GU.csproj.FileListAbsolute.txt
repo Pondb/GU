@@ -69,3 +69,4 @@ C:\Users\Pond\source\repos\All_Project\GU\GU\obj\Debug\netcoreapp2.1\Razor\Views
 C:\Users\Pond\source\repos\All_Project\GU\GU\obj\Debug\netcoreapp2.1\Razor\Views\Admin\Create_Tree.g.cshtml.cs
 C:\Users\Pond\source\repos\All_Project\GU\GU\obj\Debug\netcoreapp2.1\Razor\Views\Todo_Task\Add_Task.g.cshtml.cs
 C:\Users\Pond\source\repos\All_Project\GU\GU\obj\Debug\netcoreapp2.1\Razor\Views\Todo_Task\Task.g.cshtml.cs
+C:\Users\Pond\source\repos\All_Project\GU\GU\obj\Debug\netcoreapp2.1\Razor\Views\Todo_Task\Task_Statistic.g.cshtml.cs
