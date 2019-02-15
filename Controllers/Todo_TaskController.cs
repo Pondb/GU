@@ -33,6 +33,26 @@ namespace GU.Controllers
 
         }
 
+
+
+        //Calendar
+        public JsonResult GetTasks(ToDo_Task Meeting_Info)
+        {
+
+            //var events = _context.Meeting_Info.Include("Meeting_Type").ToList();
+
+            //เลือกเฉพาะที่ยังไม่เสร็จ
+            //var todoTask = _context.ToDo_Task.Where(i=>i.Task_isComplete != "Y" && i.Task_isFail != "Y").ToList();
+
+            var todoTask = _context.ToDo_Task.ToList();
+
+
+            return Json(todoTask);
+
+        }
+
+
+
         //Removed Task from table.
         public IActionResult Remove_Task(int id)
         {
@@ -94,6 +114,8 @@ namespace GU.Controllers
 
 
                 var task = _context.ToDo_Task.Where(i => i.User_ID == user_id && i.Task_Parent_ID == 0);
+
+                _CLSR.CheckTaskDueDate(user_id, 20);
 
 
 

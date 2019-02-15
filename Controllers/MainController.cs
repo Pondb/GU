@@ -51,6 +51,8 @@ namespace GU.Controllers
                
             }
 
+            _CLSR.CheckTaskDueDate(user_id, 20);
+
             var TimeNow = Convert.ToInt32(_CLSR.GetTimeNow(""));
 
             //Flat BG

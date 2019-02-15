@@ -152,11 +152,13 @@ namespace GU.Class
 
             String TimeNow = cTime.Substring(0, 4);
 
+
             var user = _context.User.Where(i => i.User_ID == user_id).SingleOrDefault();
             var tree = _context.Trees.Where(i => i.User_ID == user_id && i.Tree_Status == "Y").SingleOrDefault();
 
             //จะหาเจอแค่ Task ที่มีเงื่อนไขตามนี้ ถ้าเช็คครั้งต่อไปจะไม่ลบ ID ซ้ำๆ
             var task = _context.ToDo_Task.Where(i => i.User_ID == user_id && i.Task_isComplete == "N" && i.Task_isFail == "N" && i.Task_Status == "Y" && i.Task_Parent_ID == 0).ToList();
+
 
 
 
