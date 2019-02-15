@@ -453,6 +453,28 @@ string InsertTimeToDisplay(string timeIn)
         border-radius: 20px;
     }
 </style>
+
+<style>
+
+
+    .fc-head {
+        background-color: #1C1408;
+        color: white;
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    .fc-time {
+        display: none;
+    }
+
+ 
+    #calender {
+        position: static;
+    }
+</style>
+
 <br />
 
 
@@ -484,23 +506,58 @@ string InsertTimeToDisplay(string timeIn)
                         var taskDueTime_Full = taskHour + ":" + taskMinute;
 
 
-
+                        // Not Complete but Not Failed.
                         if (v.Task_isComplete == "N" && v.Task_isFail == "N") {
                             events.push({
 
-                                taskName: v.Task_Name,
-                                taskDescription: v.Task_Description,
+                                title: v.Task_Name,
+                                description: v.Task_Description,
                                 start: moment(v.Task_Due_Date),
-                                time: taskDueTime_Full
-                                //color: v.Meeting_Type.ThemeColor,
-                                //place: v.Meeting_Info_Place_TH,                    
-                                //meetingstatus: v.Meeting_Status,
-                                //meetingtype: v.Meeting_Type.Meeting_Type_Name
+                                time: taskDueTime_Full,
+                                color: '#D7D7D9',
+                                status: "Pending"
+
 
 
 
                             });
                         }
+
+                        //Completed.
+                        if (v.Task_isComplete == "Y" && v.Task_isFail == "N") {
+                            events.push({
+
+                                title: v.Task_Name,
+                                description: v.Task_Description,
+                                start: moment(v.Task_Due_Date),
+                                time: taskDueTime_Full,
+                                color: '#7FCF7E',
+                                status: "Completed"
+
+
+
+
+                            });
+                        }
+
+                        //Failed.
+                        if (v.Task_isComplete == "N" && v.Task_isFail == "Y") {
+                            events.push({
+
+                                title: v.Task_Name,
+                                description: v.Task_Description,
+                                start: moment(v.Task_Due_Date),
+                                time: taskDueTime_Full,
+                                color: '#FF524F',
+                                status: "Failed"
+
+
+
+
+                            });
+                        }
+
+
 
                     })
 
@@ -515,38 +572,55 @@ string InsertTimeToDisplay(string timeIn)
 
                 $('#calender').fullCalendar('destroy');
 
-                        $('#calender').fullCalendar({
-                            contentHeight: 400,
-                            defaultDate: new Date(),
-                            timeFormat: 'h(:mm)a',
-                            header: {
-                                left: 'prev,next today',
-                                center: 'title',
-                                right: 'month'
-                            },
-                            eventLimit: true,
-                            eventColor: '#378006',
-                            events: events,
-                            eventClick: function (calEvent, jsEvent, view) {
+                $('#calender').fullCalendar({
+                    contentHeight: 500,
+                    defaultDate: new Date(),
+                    timeFormat: 'h(:mm)a',
+                    header: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'month'
+                    },
+                    eventLimit: true,
+                    eventColor: '#378006',
+                    events: events,
+                    eventClick: function (calEvent, jsEvent, view) {
 
-                                        $('#myModal #eventTitle').text(calEvent.taskName);
+                        $('#myModal #eventTitle').text(calEvent.title);
 
-                                        var $description = $('<div/>');
+                        var $description = $('<div/>');
 
-                                        $description.append($('<p/>').html('<b>Task Due Date : </b>' + calEvent.start.format("DD MMM YYYY")));
-                                        $description.append($('<p/>').html('<b>Due Due Time : </b>' + calEvent.time));
-                                        //$description.append($('<p/>').html('<b>สถานที่จัดการประชุม : </b>' + calEvent.place));
-                                        $description.append($('<p/>').html('<b>Note : </b>' + calEvent.taskDescription));
-                                        //$description.append($('<p/>').html('<b>ประเภทการประชุม : </b>' + calEvent.meetingtype));
+                        if (calEvent.status == "Completed") {
+                            $description.append($('<p/>').html('<b>Status : </b>' + "<b style='color:green'>" + calEvent.status + "</b>"));
+                        }
+                        else if (calEvent.status == "Pending") {
+                            $description.append($('<p/>').html('<b>Status : </b>' + "<b style='color:gray'>" + calEvent.status + "</b>"));
+                        }
+                        else if (calEvent.status == "Failed") {
+                            $description.append($('<p/>').html('<b>Status : </b>' + "<b style='color:red'>" + calEvent.status + "</b>"));
+                        }
 
-                                        $('#myModal #pDetails').empty().html($description);
+                        $description.append($('<p/>').html('<hr>'));
+                        $description.append($('<p/>').html('<b>Due Date : </b>' + calEvent.start.format("DD MMM YYYY")));
+                        $description.append($('<p/>').html('<b>Due Time : </b>' + calEvent.time));
 
-                                        $('#myModal').modal();
+                        if (calEvent.description != null) {
+                            $description.append($('<p/>').html('<b>Note : </b>' + calEvent.description));
+                        }
+                        else {
+                            $description.append($('<p/>').html('<b>Note : </b>'));
+                        }
+                        
+
+                        $('#myModal #pDetails').empty().html($description);
+                        $('#modalHeader').css('background-color', calEvent.color);
+
+                        $('#myModal').modal();
 
 
-                            }
-                        })
                     }
+                })
+            }
 
         })
     </script>
@@ -562,7 +636,7 @@ string InsertTimeToDisplay(string timeIn)
 <div id="myModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header" id="modalHeader" style="background-color:#7fcf7e">
                 <h4 class="modal-title"><span id="eventTitle"></span></h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
 
@@ -572,7 +646,7 @@ string InsertTimeToDisplay(string timeIn)
                 <p id="pDetails"></p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Back</button>
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Back</button>
             </div>
         </div>
     </div>
@@ -587,7 +661,7 @@ string InsertTimeToDisplay(string timeIn)
         <!-- Calendar -->
         <div class="row">
             <div class="col-md-12">
-                
+
                 <div id="calender">
 
                 </div>
