@@ -64,6 +64,10 @@
     <script src="~/js/phaser.min.js"></script>
 
 
+    <!-- Vue JS -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
 
 
 
@@ -85,6 +89,10 @@
             font-family: 'Titillium Web', sans-serif;
             background-color: white;
         }
+
+
+
+       
     </style>
 
 
@@ -249,6 +257,9 @@
 
 
 
+
+
+
     </script>
 
 </head>
@@ -261,20 +272,27 @@
 <body>
 
 
+
+
     @await Component.InvokeAsync("MenuList")
 
     <partial name="_CookieConsentPartial" />
 
 
     @*<div id="alertTab" class="alert alert-success alert-dismissible fade" style="text-align:center">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <div id="alertText">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <div id="alertText">
 
-        </div>
-    </div>*@
-    
+            </div>
+        </div>*@
+
+
+
+
 
     <div class="container-fluid body-content">
+
+
 
 
 
@@ -298,7 +316,7 @@
 
 
         @*<br />
-        <br />*@
+            <br />*@
 
         <footer>
 
@@ -343,6 +361,9 @@
         </footer>
 
 
+
+
+
         <!--MODAL-->
         <button type="button" class="btn btn-info btn-lg" id="modalOpen" data-toggle="modal" data-target="#modal_login">Open Modal</button>
         <!-- Modal -->
@@ -359,7 +380,7 @@
                         @*@HttpContext.Current.Session["Username"].ToString();*@
 
                         @*@using (Html.BeginForm("Login", "Home", FormMethod.Post, new { @class = "ui large form" }))
-                        {*@
+                            {*@
                         <div class="row">
                             <div class="col-md-1">
 
