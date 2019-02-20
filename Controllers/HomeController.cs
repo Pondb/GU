@@ -81,7 +81,7 @@ namespace GU.Controllers
                         }
                         catch (Exception e)
                         {
-                            TempData["msg"] = _CLSR.GetAlertBar("Error", e.Message, "danger");
+                            TempData["msg"] = _CLSR.GetAlert("Error: " + e.Message);
                             return RedirectToAction("Index", "Home");
                         }
                     }
@@ -109,7 +109,7 @@ namespace GU.Controllers
                         }
                         catch (Exception e)
                         {
-                            TempData["msg"] = _CLSR.GetAlertBar("Error", e.Message, "danger");
+                            TempData["msg"] = _CLSR.GetAlert("Error: " + e.Message);
                             return RedirectToAction("Index", "Home");
                         }
                     }
@@ -143,21 +143,10 @@ namespace GU.Controllers
                 {
                     HttpContext.Session.SetString("User_ID", user.User_ID.ToString());
 
-                    using (IDbContextTransaction dbTran = _context.Database.BeginTransaction())
-                    {
-                        try
-                        {
-                            user.Last_Login = cDate;
+                    user.Last_Login = cDate;
 
-                            _context.Update(user);
-                            _context.SaveChanges();
-                        }
-                        catch (Exception e)
-                        {
-                            TempData["msg"] = _CLSR.GetScriptAlertPopUp("Eror", e.Message, "", "E");
-                            return RedirectToAction("Index", "Home");
-                        }
-                    }
+                    _context.Update(user);
+                    _context.SaveChanges();
 
                     string user_id_string = HttpContext.Session.GetString("User_ID");
                     int user_id;

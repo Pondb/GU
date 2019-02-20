@@ -253,9 +253,57 @@
             });
 
 
+            //$('#alertModal').modal();
+
+            //alertModal_Popup("HELLO", "danger","THIS TEXST");
+
         });
 
 
+        function alertModal_Popup(title,type_color,appendHTML) {
+            $('#alertModal #alertModal_Title').text(title);
+
+            
+            var color = "";
+
+            if (type_color == "danger") {
+                color = "#DC3545";
+                fontColor = "White";
+            }
+            else if (type_color == "success") {
+                color = "#28A745";
+                fontColor = "White";
+            }
+            else if (type_color == "warning") {
+                color = "#FFC107";
+                fontColor = "White";
+            }
+            else if (type_color == "secondary") {
+                color = "#6C757D";
+                fontColor = "White";
+            }
+            else if (type_color == "gu") {
+                color = "#1C1408";
+                fontColor = "White";
+            }
+            else {
+                color = "#6C757D";
+                fontColor = "White";
+            }
+
+            var $description = $('<div/>');
+            $description.append($('<p/>').html(appendHTML));
+
+            $('#alertModal #alertModal_Detail').empty().html($description);
+            $('#alertModal_Header').css('background-color', color);
+            $('#alertModal #alertModal_Title').css('color',fontColor);
+
+            $('#alertModal').modal();
+        }
+
+        
+
+       
 
 
 
@@ -316,7 +364,7 @@
 
 
         @*<br />
-            <br />*@
+        <br />*@
 
         <footer>
 
@@ -361,6 +409,27 @@
         </footer>
 
 
+        <!-- ALERT MODAL -->
+        <div id="alertModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" id="alertModal_Header" style="background-color:#7fcf7e">
+                        <h4 class="modal-title"><span id="alertModal_Title"></span></h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                    </div>
+
+                    <div class="modal-body">
+                        <p id="alertModal_Detail"></p>
+                    </div>
+                    @*<div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Back</button>
+                    </div>*@
+                </div>
+            </div>
+        </div>
+
+
 
 
 
@@ -380,7 +449,7 @@
                         @*@HttpContext.Current.Session["Username"].ToString();*@
 
                         @*@using (Html.BeginForm("Login", "Home", FormMethod.Post, new { @class = "ui large form" }))
-                            {*@
+                        {*@
                         <div class="row">
                             <div class="col-md-1">
 

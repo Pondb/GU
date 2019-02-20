@@ -5,8 +5,7 @@
 
 <script language="javascript" type="text/javascript">
 
-
-   
+    
 
     
 
@@ -25,6 +24,25 @@
             $('#Birthdate').val("");
 
         });
+
+
+        //Last Login Converted
+        if ($('#Last_Login').text() == "") {
+
+        }
+        else {
+
+
+            var lastLogin_original = $('#Last_Login').text();
+
+            var login_y = lastLogin_original.substring(0, 4);
+            var login_m = lastLogin_original.substring(4, 6);
+            var login_d = lastLogin_original.substring(6);
+
+            var lastLogin_Rearrange = login_d + "/" + login_m + "/" + login_y;
+
+            $('#Last_Login').text(lastLogin_Rearrange);
+        }
 
 
         if ($('#Birthdate').val() == "") {
@@ -51,19 +69,32 @@
             var first_name = $("#First_Name").val();
             var last_name = $("#Last_Name").val();
             var birthdate = $("#Birthdate").val();
+            var gender = $('#Gender').val();
 
             var validateArray = [];
 
             
             if (first_name == "") {
                 validateArray.push("Please enter <b>'First Name'</b> before submit.");
+                //alert("Please select 'First name' before submit.");
+              
             }
             if (last_name == "") {
                 validateArray.push("Please enter <b>'Last Name'</b> before submit.");
+                //alert("Please select 'Last name' before submit.");
+               
+
             }
             if (birthdate == "") {
                 validateArray.push("Please enter <b>'Birthdate'</b> before submit.");
+                //alert("Please enter 'Birthdate' before submit.");
+              
             }
+            if (gender == 0) {
+                //alert("Please select 'Gender' before submit.")
+                
+            }
+            
 
 
             if (validateArray.length > 0) {
@@ -75,7 +106,9 @@
                     text += validateArray[i] + "<br>";
                 }
 
-                BootstrapDialog.show({ title: 'Caution', type: BootstrapDialog.TYPE_WARNING, message: text });
+                alertModal_Popup("Warning", "warning", text);
+
+                //BootstrapDialog.show({ title: 'Caution', type: BootstrapDialog.TYPE_WARNING, message: text });
                 return false;
             }
             else {
@@ -88,6 +121,9 @@
         });
 
     });
+
+
+    
 
 </script>
 
@@ -140,9 +176,12 @@
     </div>
     <br />
     
+    @*<input asp-for="User_ID" name="id" hidden />*@
 
     <div class="row">
-        <div class="col-md-1"></div>
+        <div class="col-md-1">
+            
+        </div>
 
 
 
@@ -150,13 +189,17 @@
             <form asp-action="Edit" enctype="multipart/form-data">
 
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-12" id="main-app">
 
                         <div class="row">
                             <div class="col-md-12">
-                                <h1 class="jumbotron-fluid">My profile</h1>
-                                <p>@Model.First_Name @Model.Last_Name</p>
-                                <small>Last login: @Model.Last_Login</small>
+                                <h1 style="color:#A08BA5" class="jumbotron-fluid">MY PROFILE</h1>
+                                <div>
+                                    @*<h3>( @Model.First_Name @Model.Last_Name )</h3>*@
+                                    <h3 style="color:dodgerblue">{{f_name}} {{l_name}}</h3>
+                                </div>
+                                
+                                
                                 <hr />
                             </div>
 
@@ -178,14 +221,15 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>First Name:</label>
-                                    <input asp-for="First_Name" id="First_Name" class="form-control" />
+                                    <input asp-for="First_Name" v-model="f_name" id="First_Name" class="form-control" />
+                                    
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Last Name:</label>
-                                    <input asp-for="Last_Name" id="Last_Name" class="form-control" />
+                                    <input asp-for="Last_Name" v-model="l_name" id="Last_Name" class="form-control" />
                                 </div>
                             </div>
                         </div>
@@ -201,7 +245,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Gender:</label>
-                                    <select asp-for="Gender" class="chosen-select">
+                                    <select asp-for="Gender" id="Gender" class="chosen-select">
                                         <option value="M">Male</option>
                                         <option value="F">Female</option>
                                         <option value="O">Other</option>
@@ -213,7 +257,7 @@
                         <br />
 
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-10">
                                 <div class="form-group">
 
 
@@ -221,10 +265,14 @@
                                     <input type="submit" id="btnSubmit" value="Submit" class="btn btn-primary" />
                                 </div>
                             </div>
+                            <div class="col-md-2">
+                                <small>Last login: </small><small id="Last_Login">@Model.Last_Login</small>
+                            </div>
 
 
                         </div>
 
+                    
 
                     </div>
                 </div>
@@ -240,6 +288,20 @@
     
 
 </div>
+
+
+<script>
+    //VUE JS
+    var mainApp = new Vue({
+        el: '#main-app',
+        data: {
+            f_name: '@Model.First_Name',
+            l_name: '@Model.Last_Name'
+        }
+    })
+</script>
+
+
 
 
 

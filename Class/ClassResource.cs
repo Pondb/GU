@@ -132,17 +132,21 @@ namespace GU.Class
 
 
         //Alert Dialog Function
-        public String GetAlertBar(String header, String txt, String alertType)
+        public String GetAlert(String txt)
         {
             
 
-            var alert_bt = "<script>alert_bt('" + header + "','" + txt + "','" + alertType + "')</script>";
+            //var alert_bt = "<script>alertModal_Popup('" + title + "','" + alertType + "','" + txt + "');</script>";
+            var alert_bt = "<script>alert('"+ txt +"');</script>";
+            //var alert_bts = "<script>alertModal_Popup('Hello','danger','Text');</script>";
 
             return alert_bt;
            
 
 
         }
+
+       
 
         //Check Task is over Due Date
         public void CheckTaskDueDate(int user_id,int hpDown)

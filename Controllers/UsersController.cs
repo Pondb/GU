@@ -261,6 +261,7 @@ namespace GU.Controllers
             return View(user);
         }
 
+        
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -307,16 +308,40 @@ namespace GU.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("User_ID,Role_ID,Email,Password,First_Name,Last_Name,Birthdate,Wrong_Password_Count,Last_Login,Last_Update,Gender,User_Status,User_isLock")] User user)
         {
-            if (id != user.User_ID)
+
+
+
+            var user_id_string = HttpContext.Session.GetString("User_ID");
+            var user_id = 0;
+
+            try
+            {
+                user_id = Convert.ToInt32(user_id_string);
+            }
+            catch
+            {
+                user_id = 0;
+            }
+
+             if (id != user_id)
             {
                 return NotFound();
             }
+
+
+            var originalUser = _context.User.Where(i => i.User_ID == user_id).SingleOrDefault();
+            originalUser.First_Name = user.First_Name; 
+            originalUser.Last_Name = user.Last_Name; 
+            originalUser.Birthdate = _CLSR.ConvertDatePicker(user.Birthdate); 
+            originalUser.Gender = user.Gender; 
+
+           
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(user);
+                    _context.Update(originalUser);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -330,7 +355,8 @@ namespace GU.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                TempData["getAlert"] = _CLSR.GetAlert("Update profile successfull");
+                return RedirectToAction("Index", "Home");
             }
             return View(user);
         }
