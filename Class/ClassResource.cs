@@ -229,19 +229,50 @@ namespace GU.Class
         public bool Exp_Up(int user_id,float exp_input)
         {
 
+            String cDate = GetDateNow("");
+            String cTime = GetTimeNow("");
+
             var user = _context.User.Where(i => i.User_ID == user_id).SingleOrDefault();
             var tree = _context.Trees.Where(i => i.User_ID == user_id && i.Tree_Status == "Y").SingleOrDefault();
+
+            var user_tree_count = _context.Trees.Where(i => i.User_ID == user_id).Count();
 
             if (user_id != 0)
             {
                 tree.Tree_EXP = tree.Tree_EXP + exp_input;
 
-                if (tree.Tree_EXP > 100)
+                if (tree.Tree_Level < 4 && tree.Tree_EXP > 100)
                 {
                     var remainEXP = tree.Tree_EXP - 100;
 
                     tree.Tree_EXP = remainEXP;
                     tree.Tree_Level = tree.Tree_Level + 1;
+
+                    if (tree.Tree_Level == 4)
+                    {
+                        tree.Tree_Status = "G" + user_tree_count;
+
+
+                        //new Tree Created with Type Tree == 2
+                        Trees basic_Tree = new Trees();
+
+                        basic_Tree.User_ID = user_id;
+                        basic_Tree.Tree_Level = 1;
+                        basic_Tree.Tree_EXP = 0;
+                        
+                        //Tree Type == 2++
+                        basic_Tree.Tree_Type_ID = 1;
+                        basic_Tree.Tree_Name = "Basic Tree";
+                        basic_Tree.Tree_HP = 100;
+                        basic_Tree.Plant_Date = cDate;
+                        basic_Tree.Create_Date = cDate;
+                        basic_Tree.Update_Date = cDate;
+                        basic_Tree.Tree_Status = "S";
+                        basic_Tree.Tree_isDead = "N";
+
+                        _context.Add(basic_Tree);
+
+                    }
                 }
 
                 _context.Update(tree);

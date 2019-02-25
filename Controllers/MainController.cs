@@ -94,10 +94,14 @@ namespace GU.Controllers
 
                 String timeWithoutSecond = cTime.Substring(0,4);
 
-                var userTree = _context.Trees
+                var userTree_01 = _context.Trees
                 .Include(i => i.UserInfo)
                 .Include(i => i.Tree_Type)
-                .Where(c => c.User_ID == user_id && c.Tree_Status == "Y").SingleOrDefault();
+                .Where(c => c.User_ID == user_id && c.Tree_Status == "S").SingleOrDefault();
+
+                var userTree_FullyGrowth = _context.Trees.Include(i => i.UserInfo)
+                    .Include(i => i.Tree_Type)
+                    .Where(c => c.User_ID == user_id && c.Tree_Status == "G").ToList();
 
                 //ต้องเพิ่ม ไม่นับ Task ที่เฟลไปแล้ว
                 var task_all_count = _context.ToDo_Task.Where(i => i.User_ID == user_id && i.Task_Parent_ID == 0 && i.Task_Status == "Y" && i.Task_isFail == "N").Count();
@@ -120,7 +124,7 @@ namespace GU.Controllers
 
 
 
-                var tree_hp = userTree.Tree_HP;
+                var tree_hp = userTree_01.Tree_HP;
 
                 ViewBag.task_count = task_all_count;
                 ViewBag.task_finished = task_complete_count;
@@ -128,50 +132,50 @@ namespace GU.Controllers
                 ViewBag.task_today = taskTodayCount;
 
                 
-                if (userTree.Tree_Level == 1)
+                if (userTree_01.Tree_Level == 1)
                 {
 
-                    if (userTree.Tree_isDead == "Y")
+                    if (userTree_01.Tree_isDead == "Y")
                     {
-                        ViewBag.TreeIMG = userTree.Tree_Type.Tree_LV1_DIE;
+                        ViewBag.TreeIMG = userTree_01.Tree_Type.Tree_LV1_DIE;
                     }
                     else
                     {
-                        ViewBag.TreeIMG = userTree.Tree_Type.Tree_LV1_IMG;
+                        ViewBag.TreeIMG = userTree_01.Tree_Type.Tree_LV1_IMG;
                     }
                     
                 }
-                else if (userTree.Tree_Level == 2)
+                else if (userTree_01.Tree_Level == 2)
                 {
-                    if (userTree.Tree_isDead == "Y")
+                    if (userTree_01.Tree_isDead == "Y")
                     {
-                        ViewBag.TreeIMG = userTree.Tree_Type.Tree_LV2_DIE;
+                        ViewBag.TreeIMG = userTree_01.Tree_Type.Tree_LV2_DIE;
                     }
                     else
                     {
-                        ViewBag.TreeIMG = userTree.Tree_Type.Tree_LV2_IMG;
+                        ViewBag.TreeIMG = userTree_01.Tree_Type.Tree_LV2_IMG;
                     }
                 }
-                else if (userTree.Tree_Level == 3)
+                else if (userTree_01.Tree_Level == 3)
                 {
-                    if (userTree.Tree_isDead == "Y")
+                    if (userTree_01.Tree_isDead == "Y")
                     {
-                        ViewBag.TreeIMG = userTree.Tree_Type.Tree_LV3_DIE;
+                        ViewBag.TreeIMG = userTree_01.Tree_Type.Tree_LV3_DIE;
                     }
                     else
                     {
-                        ViewBag.TreeIMG = userTree.Tree_Type.Tree_LV3_IMG;
+                        ViewBag.TreeIMG = userTree_01.Tree_Type.Tree_LV3_IMG;
                     }
                 }
-                else if (userTree.Tree_Level == 4)
+                else if (userTree_01.Tree_Level == 4)
                 {
-                    if (userTree.Tree_isDead == "Y")
+                    if (userTree_01.Tree_isDead == "Y")
                     {
-                        ViewBag.TreeIMG = userTree.Tree_Type.Tree_LV4_DIE;
+                        ViewBag.TreeIMG = userTree_01.Tree_Type.Tree_LV4_DIE;
                     }
                     else
                     {
-                        ViewBag.TreeIMG = userTree.Tree_Type.Tree_LV4_IMG;
+                        ViewBag.TreeIMG = userTree_01.Tree_Type.Tree_LV4_IMG;
                     }
                 }
                 else
@@ -183,7 +187,7 @@ namespace GU.Controllers
 
 
 
-                return View(userTree);
+                return View(userTree_01);
             }
             else
             {

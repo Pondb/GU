@@ -212,7 +212,7 @@ namespace GU.Controllers
                             basic_Tree.Plant_Date = cDate;
                             basic_Tree.Create_Date = cDate;
                             basic_Tree.Update_Date = cDate;
-                            basic_Tree.Tree_Status = "Y";
+                            basic_Tree.Tree_Status = "S";
                             basic_Tree.Tree_isDead = "N";
 
                             //ROLE ID 1 คือ Admin

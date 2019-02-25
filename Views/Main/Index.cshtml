@@ -144,17 +144,55 @@
 
 
         //Isometric Tree Design
+        //Plain Soil BG 1
         this.add.image(0, 0, 'background').setOrigin(0, 0);
+       
+
+
         //Test Fine
         //treeBlock = this.physics.add.staticGroup();
 
         //treeBlock.create(userWidth * 0.5, userHeight * 0.6, 'plain_field').setScale(0.6).refreshBody();
         //treeBlock.create(userWidth * 0.5, userHeight * 0.5, 'trees').setScale(1).refreshBody();
 
-        treeBlock = this.physics.add.staticGroup();
 
-        treeBlock.create(960, 600, 'plain_field').setScale(1).refreshBody();
-        treeBlock.create(960, 540, 'trees').setScale(1).refreshBody();
+
+        // 1*1 Block
+        //treeBlock = this.physics.add.staticGroup();
+
+        //treeBlock.create(960, 600, 'plain_field').setScale(1).refreshBody();
+        //treeBlock.create(960, 540, 'trees').setScale(1).refreshBody();
+
+
+        // 2*2 Blocks
+
+        //Tree 3
+        treeBlock_03 = this.physics.add.staticGroup();
+
+        treeBlock_03.create(990, 395, 'plain_field').setScale(1).refreshBody();
+        treeBlock_03.create(990, 335, 'trees').setScale(1).refreshBody();
+
+        //Tree 4
+        treeBlock_04 = this.physics.add.staticGroup();
+
+        treeBlock_04.create(1275, 565, 'plain_field').setScale(1).refreshBody();
+        treeBlock_04.create(1275, 505, 'trees').setScale(1).refreshBody();
+
+
+
+        treeBlock_01 = this.physics.add.staticGroup();
+
+        //ยึดที่แกน X และ แกน Y ลบห่างกัน -60
+        treeBlock_01.create(700, 560, 'plain_field').setScale(1).refreshBody();
+        treeBlock_01.create(700, 500, 'trees').setScale(1).refreshBody();
+
+        //Tree 2
+        treeBlock_02 = this.physics.add.staticGroup();
+
+        treeBlock_02.create(985, 730, 'plain_field').setScale(1).refreshBody();
+        treeBlock_02.create(985, 670, 'trees').setScale(1).refreshBody();
+
+
 
 
         this.add.image(80, 80, 'coin_icon').setScale(0.08);
