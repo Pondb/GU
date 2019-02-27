@@ -55,21 +55,6 @@ namespace GU.Controllers
 
             var TimeNow = Convert.ToInt32(_CLSR.GetTimeNow(""));
 
-            //Flat BG
-            //if (TimeNow >= 000000 && TimeNow <= 060000 || TimeNow > 180000 && TimeNow <= 240000)
-            //{
-            //    ViewBag.Scene_Time_BG = "../assets/GU_Game/img/PNG/backgroud/pcbackgroud-night.png";
-            //    ViewBag.DorN = "Night";
-
-
-            //}
-            //else
-            //{
-            //    ViewBag.Scene_Time_BG = "../assets/GU_Game/img/PNG/backgroud/pcbackgroud-day.png";
-            //    ViewBag.DorN = "Day";
-
-            //}
-
             //ISO BG
             if (TimeNow >= 000000 && TimeNow <= 060000 || TimeNow > 180000 && TimeNow <= 240000)
             {
@@ -99,9 +84,19 @@ namespace GU.Controllers
                 .Include(i => i.Tree_Type)
                 .Where(c => c.User_ID == user_id && c.Tree_Status == "S").SingleOrDefault();
 
-                var userTree_FullyGrowth = _context.Trees.Include(i => i.UserInfo)
+                var userTree_G1 = _context.Trees.Include(i => i.UserInfo)
                     .Include(i => i.Tree_Type)
-                    .Where(c => c.User_ID == user_id && c.Tree_Status == "G").ToList();
+                    .Where(c => c.User_ID == user_id && c.Tree_Status == "G1").SingleOrDefault();
+
+                var userTree_G2 = _context.Trees.Include(i => i.UserInfo)
+                    .Include(i => i.Tree_Type)
+                    .Where(c => c.User_ID == user_id && c.Tree_Status == "G2").SingleOrDefault();
+
+
+                var userTree_G3 = _context.Trees.Include(i => i.UserInfo)
+                    .Include(i => i.Tree_Type)
+                    .Where(c => c.User_ID == user_id && c.Tree_Status == "G3").SingleOrDefault();
+
 
                 //ต้องเพิ่ม ไม่นับ Task ที่เฟลไปแล้ว
                 var task_all_count = _context.ToDo_Task.Where(i => i.User_ID == user_id && i.Task_Parent_ID == 0 && i.Task_Status == "Y" && i.Task_isFail == "N").Count();
@@ -130,64 +125,233 @@ namespace GU.Controllers
                 ViewBag.task_finished = task_complete_count;
                 ViewBag.Tree_HP = tree_hp;
                 ViewBag.task_today = taskTodayCount;
+                ViewBag.tree_exp = userTree_01.Tree_EXP;
 
-                
-                if (userTree_01.Tree_Level == 1)
+                //Fully Grow Tree to ViewBag
+                ViewBag.G1 = userTree_G1;
+                ViewBag.G2 = userTree_G2;
+                ViewBag.G2 = userTree_G3;
+
+
+                //G1
+                if (userTree_G1 != null)
                 {
-
-                    if (userTree_01.Tree_isDead == "Y")
+                    //G1 Tree Level IMG
+                    if (userTree_G1.Tree_Level == 1)
                     {
-                        ViewBag.TreeIMG = userTree_01.Tree_Type.Tree_LV1_DIE;
+                        if (userTree_G1.Tree_isDead == "Y")
+                        {
+                            ViewBag.G1_IMG = userTree_G1.Tree_Type.Tree_LV1_DIE;
+                        }
+                        else
+                        {
+                            ViewBag.G1_IMG = userTree_G1.Tree_Type.Tree_LV1_IMG;
+                        }
+                    }
+                    else if (userTree_G1.Tree_Level == 2)
+                    {
+                        if (userTree_G1.Tree_isDead == "Y")
+                        {
+                            ViewBag.G1_IMG = userTree_G1.Tree_Type.Tree_LV2_DIE;
+                        }
+                        else
+                        {
+                            ViewBag.G1_IMG = userTree_G1.Tree_Type.Tree_LV2_IMG;
+                        }
+                    }
+                    else if (userTree_G1.Tree_Level == 3)
+                    {
+                        if (userTree_G1.Tree_isDead == "Y")
+                        {
+                            ViewBag.G1_IMG = userTree_G1.Tree_Type.Tree_LV3_DIE;
+                        }
+                        else
+                        {
+                            ViewBag.G1_IMG = userTree_G1.Tree_Type.Tree_LV3_IMG;
+                        }
+                    }
+                    else if (userTree_G1.Tree_Level == 4)
+                    {
+                        if (userTree_G1.Tree_isDead == "Y")
+                        {
+                            ViewBag.G1_IMG = userTree_G1.Tree_Type.Tree_LV4_DIE;
+                        }
+                        else
+                        {
+                            ViewBag.G1_IMG = userTree_G1.Tree_Type.Tree_LV4_IMG;
+                        }
+                    }
+
+                }
+
+                //G2
+                if (userTree_G2 != null)
+                {
+                    //G2 Tree Level IMG
+                    if (userTree_G2.Tree_Level == 1)
+                    {
+                        if (userTree_G2.Tree_isDead == "Y")
+                        {
+                            ViewBag.G2_IMG = userTree_G2.Tree_Type.Tree_LV1_DIE;
+                        }
+                        else
+                        {
+                            ViewBag.G2_IMG = userTree_G2.Tree_Type.Tree_LV1_IMG;
+                        }
+                    }
+                    else if (userTree_G2.Tree_Level == 2)
+                    {
+                        if (userTree_G2.Tree_isDead == "Y")
+                        {
+                            ViewBag.G2_IMG = userTree_G2.Tree_Type.Tree_LV2_DIE;
+                        }
+                        else
+                        {
+                            ViewBag.G2_IMG = userTree_G2.Tree_Type.Tree_LV2_IMG;
+                        }
+                    }
+                    else if (userTree_G2.Tree_Level == 3)
+                    {
+                        if (userTree_G2.Tree_isDead == "Y")
+                        {
+                            ViewBag.G2_IMG = userTree_G2.Tree_Type.Tree_LV3_DIE;
+                        }
+                        else
+                        {
+                            ViewBag.G2_IMG = userTree_G2.Tree_Type.Tree_LV3_IMG;
+                        }
+                    }
+                    else if (userTree_G2.Tree_Level == 4)
+                    {
+                        if (userTree_G2.Tree_isDead == "Y")
+                        {
+                            ViewBag.G2_IMG = userTree_G2.Tree_Type.Tree_LV4_DIE;
+                        }
+                        else
+                        {
+                            ViewBag.G2_IMG = userTree_G2.Tree_Type.Tree_LV4_IMG;
+                        }
+                    }
+
+                }
+
+                //G3
+                if (userTree_G3 != null)
+                {
+                    //G3 Tree Level IMG
+                    if (userTree_G3.Tree_Level == 1)
+                    {
+                        if (userTree_G3.Tree_isDead == "Y")
+                        {
+                            ViewBag.G3_IMG = userTree_G3.Tree_Type.Tree_LV1_DIE;
+                        }
+                        else
+                        {
+                            ViewBag.G3_IMG = userTree_G3.Tree_Type.Tree_LV1_IMG;
+                        }
+                    }
+                    else if (userTree_G3.Tree_Level == 2)
+                    {
+                        if (userTree_G3.Tree_isDead == "Y")
+                        {
+                            ViewBag.G3_IMG = userTree_G3.Tree_Type.Tree_LV2_DIE;
+                        }
+                        else
+                        {
+                            ViewBag.G3_IMG = userTree_G3.Tree_Type.Tree_LV2_IMG;
+                        }
+                    }
+                    else if (userTree_G3.Tree_Level == 3)
+                    {
+                        if (userTree_G3.Tree_isDead == "Y")
+                        {
+                            ViewBag.G3_IMG = userTree_G3.Tree_Type.Tree_LV3_DIE;
+                        }
+                        else
+                        {
+                            ViewBag.G3_IMG = userTree_G3.Tree_Type.Tree_LV3_IMG;
+                        }
+                    }
+                    else if (userTree_G3.Tree_Level == 4)
+                    {
+                        if (userTree_G3.Tree_isDead == "Y")
+                        {
+                            ViewBag.G3_IMG = userTree_G3.Tree_Type.Tree_LV4_DIE;
+                        }
+                        else
+                        {
+                            ViewBag.G3_IMG = userTree_G3.Tree_Type.Tree_LV4_IMG;
+                        }
+                    }
+
+                }
+
+
+
+                //Main Tree Image
+                if (userTree_01 != null)
+                {
+                    if (userTree_01.Tree_Level == 1)
+                    {
+
+                        if (userTree_01.Tree_isDead == "Y")
+                        {
+                            ViewBag.TreeIMG = userTree_01.Tree_Type.Tree_LV1_DIE;
+                        }
+                        else
+                        {
+                            ViewBag.TreeIMG = userTree_01.Tree_Type.Tree_LV1_IMG;
+                        }
+
+                    }
+                    else if (userTree_01.Tree_Level == 2)
+                    {
+                        if (userTree_01.Tree_isDead == "Y")
+                        {
+                            ViewBag.TreeIMG = userTree_01.Tree_Type.Tree_LV2_DIE;
+                        }
+                        else
+                        {
+                            ViewBag.TreeIMG = userTree_01.Tree_Type.Tree_LV2_IMG;
+                        }
+                    }
+                    else if (userTree_01.Tree_Level == 3)
+                    {
+                        if (userTree_01.Tree_isDead == "Y")
+                        {
+                            ViewBag.TreeIMG = userTree_01.Tree_Type.Tree_LV3_DIE;
+                        }
+                        else
+                        {
+                            ViewBag.TreeIMG = userTree_01.Tree_Type.Tree_LV3_IMG;
+                        }
+                    }
+                    else if (userTree_01.Tree_Level == 4)
+                    {
+                        if (userTree_01.Tree_isDead == "Y")
+                        {
+                            ViewBag.TreeIMG = userTree_01.Tree_Type.Tree_LV4_DIE;
+                        }
+                        else
+                        {
+                            ViewBag.TreeIMG = userTree_01.Tree_Type.Tree_LV4_IMG;
+                        }
                     }
                     else
                     {
-                        ViewBag.TreeIMG = userTree_01.Tree_Type.Tree_LV1_IMG;
-                    }
-                    
-                }
-                else if (userTree_01.Tree_Level == 2)
-                {
-                    if (userTree_01.Tree_isDead == "Y")
-                    {
-                        ViewBag.TreeIMG = userTree_01.Tree_Type.Tree_LV2_DIE;
-                    }
-                    else
-                    {
-                        ViewBag.TreeIMG = userTree_01.Tree_Type.Tree_LV2_IMG;
-                    }
-                }
-                else if (userTree_01.Tree_Level == 3)
-                {
-                    if (userTree_01.Tree_isDead == "Y")
-                    {
-                        ViewBag.TreeIMG = userTree_01.Tree_Type.Tree_LV3_DIE;
-                    }
-                    else
-                    {
-                        ViewBag.TreeIMG = userTree_01.Tree_Type.Tree_LV3_IMG;
-                    }
-                }
-                else if (userTree_01.Tree_Level == 4)
-                {
-                    if (userTree_01.Tree_isDead == "Y")
-                    {
-                        ViewBag.TreeIMG = userTree_01.Tree_Type.Tree_LV4_DIE;
-                    }
-                    else
-                    {
-                        ViewBag.TreeIMG = userTree_01.Tree_Type.Tree_LV4_IMG;
-                    }
-                }
-                else
-                {
 
-                }
-
-                
+                    }
 
 
+
+
+
+                    return View(userTree_01);
+                }
 
                 return View(userTree_01);
+                
+               
             }
             else
             {

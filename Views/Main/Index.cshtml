@@ -13,14 +13,7 @@
 
 
 
-
-    @*$(document).ready(function () {
-
-
-
-
-
-    });*@
+    
 
     window.onload = function () {
         resize();
@@ -45,20 +38,89 @@
     var tree_hp = @ViewBag.Tree_HP;
     var taskToday = @ViewBag.task_today;
 
-    // * 0.7
-    //var userWidth = window.innerWidth * devicePixelRatio;
-    //var userHeight = window.innerHeight * devicePixelRatio;
+    var tree_exp = @ViewBag.tree_exp;
 
     var userWidth = window.innerWidth;
     var userHeight = window.innerHeight;
 
-    //var userWidth = 1280;
-    //var userHeight = 720;
+    //Check Fully Growth Tree
+
+    
+
+     @{ 
+         var G1_isNull = "Y";
+         var G2_isNull = "Y";
+         var G3_isNull = "Y";
+
+         Trees tree_G1 = ViewBag.G1;
+         Trees tree_G2 = ViewBag.G2;
+         Trees tree_G3 = ViewBag.G3;
+
+         if (tree_G1 != null)
+         {
+             G1_isNull = "N";
+         }
+         if (tree_G2 != null)
+         {
+             G2_isNull = "N";
+         }
+         if (tree_G3 != null)
+         {
+             G3_isNull = "N";
+         }
+
+
+
+    }
+
+    var G1_nullCheck = "@G1_isNull";
+    var G2_nullCheck = "@G2_isNull";
+    var G3_nullCheck = "@G3_isNull";
+
+    var tree = {
+        name: "Tree_Name",
+        level: 0,
+        exp: 0,
+        hp: 100,
+        img: "IMG"
+       
+    };
+
+
+    var G1_isHere = false;
+    var G2_isHere = false;
+    var G3_isHere = false;
+
+  
+    //CHECK NULL
+    if (G1_nullCheck == "Y") {
+        
+    }
+    else {
+        @*var G1_JS = new tree("@tree_G1.Tree_Name",@tree_G1.Tree_Level,@tree_G1.Tree_EXP,@tree_G1.Tree_HP,@ViewBag.G1_IMG);*@
+        G1_isHere = true;
+    }
+
+    if (G2_nullCheck == "Y") {
+
+    }
+    else {
+        @*var G2_JS = new tree("@tree_G2.Tree_Name",@tree_G2.Tree_Level,@tree_G2.Tree_EXP,@tree_G2.Tree_HP,@ViewBag.G2_IMG);*@
+        G2_isHere = true;
+    }
+
+    if (G3_nullCheck == "Y") {
+
+    }
+    else {
+        @*var G3_JS = new tree("@tree_G3.Tree_Name",@tree_G3.Tree_Level,@tree_G3.Tree_EXP,@tree_G3.Tree_HP,@ViewBag.G3_IMG);*@
+        G3_isHere = true;
+    }
 
 
 
 
-
+    //MAIN GAME CONFIG
     var config = {
         type: Phaser.AUTO,
         //width: userWidth,
@@ -116,13 +178,21 @@
 
 
         this.load.image('trees', treeIMG);
+
+        if (G1_isHere) {
+            this.load.image('g1_tree', '@ViewBag.G1_IMG');
+        }
+        if (G2_isHere) {
+            this.load.image('g2_tree', '@ViewBag.G2_IMG');
+        }
+        if (G3_isHere) {
+            this.load.image('g3_tree', '@ViewBag.G3_IMG');
+        }
+
+
         //this.load.image('coin_b', '../assets/GU_Game/img/PNG/coin/leaf-coin.png');
         this.load.image('coin_icon', '../assets/GU_Game/img/PNG/coin/leaf-coin.png');
         this.load.image('task_icon', '../assets/GU_Game/img/PNG/task/task.png');
-
-        
-
-
 
     }
     function create() {
@@ -133,14 +203,6 @@
         //resize();
 
 
-        //Flat Tree Design
-        //this.add.image(userWidth * 0.5, userHeight * 0.65, 'background').setScale(1);
-        
-        //this.add.image(userWidth * 0.37, userWidth * 0.23, 'trees').setScale(0.75);
-          
-        //this.add.image(userWidth * 0.05, userWidth * 0.05, 'coin_icon').setScale(0.05);
-        ////this.add.image(userWidth * 0.14, userWidth * 0.05, 'task_icon').setScale(0.05);
-        //this.add.image(userWidth * 0.25, userWidth * 0.05, 'task_icon').setScale(0.05);
 
 
         //Isometric Tree Design
@@ -149,34 +211,36 @@
        
 
 
-        //Test Fine
-        //treeBlock = this.physics.add.staticGroup();
+    
 
-        //treeBlock.create(userWidth * 0.5, userHeight * 0.6, 'plain_field').setScale(0.6).refreshBody();
-        //treeBlock.create(userWidth * 0.5, userHeight * 0.5, 'trees').setScale(1).refreshBody();
+        //// 2*2 Blocks
+
+        if (G2_isHere) {
+            treeBlock_03 = this.physics.add.staticGroup();
+
+            treeBlock_03.create(990, 395, 'plain_field').setScale(1).refreshBody();
+            treeBlock_03.create(990, 335, 'g2_tree').setScale(1).refreshBody();
+        }
+
+        if (G3_isHere) {
+            treeBlock_04 = this.physics.add.staticGroup();
+
+            treeBlock_04.create(1275, 565, 'plain_field').setScale(1).refreshBody();
+            treeBlock_04.create(1275, 505, 'g3_tree').setScale(1).refreshBody();
+        }
 
 
+        ////Tree 3
+        //treeBlock_03 = this.physics.add.staticGroup();
 
-        // 1*1 Block
-        //treeBlock = this.physics.add.staticGroup();
+        //treeBlock_03.create(990, 395, 'plain_field').setScale(1).refreshBody();
+        //treeBlock_03.create(990, 335, 'trees').setScale(1).refreshBody();
 
-        //treeBlock.create(960, 600, 'plain_field').setScale(1).refreshBody();
-        //treeBlock.create(960, 540, 'trees').setScale(1).refreshBody();
+        ////Tree 4
+        //treeBlock_04 = this.physics.add.staticGroup();
 
-
-        // 2*2 Blocks
-
-        //Tree 3
-        treeBlock_03 = this.physics.add.staticGroup();
-
-        treeBlock_03.create(990, 395, 'plain_field').setScale(1).refreshBody();
-        treeBlock_03.create(990, 335, 'trees').setScale(1).refreshBody();
-
-        //Tree 4
-        treeBlock_04 = this.physics.add.staticGroup();
-
-        treeBlock_04.create(1275, 565, 'plain_field').setScale(1).refreshBody();
-        treeBlock_04.create(1275, 505, 'trees').setScale(1).refreshBody();
+        //treeBlock_04.create(1275, 565, 'plain_field').setScale(1).refreshBody();
+        //treeBlock_04.create(1275, 505, 'trees').setScale(1).refreshBody();
 
 
 
@@ -186,11 +250,16 @@
         treeBlock_01.create(700, 560, 'plain_field').setScale(1).refreshBody();
         treeBlock_01.create(700, 500, 'trees').setScale(1).refreshBody();
 
-        //Tree 2
-        treeBlock_02 = this.physics.add.staticGroup();
 
-        treeBlock_02.create(985, 730, 'plain_field').setScale(1).refreshBody();
-        treeBlock_02.create(985, 670, 'trees').setScale(1).refreshBody();
+        if (G1_isHere) {
+            //Tree 2
+            treeBlock_02 = this.physics.add.staticGroup();
+
+            treeBlock_02.create(985, 730, 'plain_field').setScale(1).refreshBody();
+            treeBlock_02.create(985, 670, 'g1_tree').setScale(1).refreshBody();
+        }
+
+        
 
 
 
@@ -225,6 +294,11 @@
             //TREE HP
             task_text = this.add.text(690, 65, task_complete + '/' + task_count, { fontSize: '48px', fill: 'gray' });
 
+            //EXP Text
+            exp_text = this.add.text(130, 110, tree_exp + '%', { fontSize: '26px', fill: 'gray' });
+
+
+
         }
         else if (bgDayorNight == "Night") {
             
@@ -247,6 +321,9 @@
 
             //TREE HP
             task_text = this.add.text(690, 65, task_complete + '/' + task_count, { fontSize: '48px', fill: 'white' });
+
+            //EXP Text
+            exp_text = this.add.text(130, 110, tree_exp + '%', { fontSize: '26px', fill: 'white' });
         }
         else {
             //ERROR

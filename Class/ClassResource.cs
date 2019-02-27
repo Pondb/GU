@@ -158,7 +158,7 @@ namespace GU.Class
 
 
             var user = _context.User.Where(i => i.User_ID == user_id).SingleOrDefault();
-            var tree = _context.Trees.Where(i => i.User_ID == user_id && i.Tree_Status == "Y").SingleOrDefault();
+            var tree = _context.Trees.Where(i => i.User_ID == user_id && i.Tree_Status == "S").SingleOrDefault();
 
             //จะหาเจอแค่ Task ที่มีเงื่อนไขตามนี้ ถ้าเช็คครั้งต่อไปจะไม่ลบ ID ซ้ำๆ
             var task = _context.ToDo_Task.Where(i => i.User_ID == user_id && i.Task_isComplete == "N" && i.Task_isFail == "N" && i.Task_Status == "Y" && i.Task_Parent_ID == 0).ToList();
@@ -233,7 +233,7 @@ namespace GU.Class
             String cTime = GetTimeNow("");
 
             var user = _context.User.Where(i => i.User_ID == user_id).SingleOrDefault();
-            var tree = _context.Trees.Where(i => i.User_ID == user_id && i.Tree_Status == "Y").SingleOrDefault();
+            var tree = _context.Trees.Where(i => i.User_ID == user_id && i.Tree_Status == "S").SingleOrDefault();
 
             var user_tree_count = _context.Trees.Where(i => i.User_ID == user_id).Count();
 
@@ -250,27 +250,94 @@ namespace GU.Class
 
                     if (tree.Tree_Level == 4)
                     {
-                        tree.Tree_Status = "G" + user_tree_count;
-
-
-                        //new Tree Created with Type Tree == 2
-                        Trees basic_Tree = new Trees();
-
-                        basic_Tree.User_ID = user_id;
-                        basic_Tree.Tree_Level = 1;
-                        basic_Tree.Tree_EXP = 0;
+                        //ถ้าต้นไม้เดิม Level ขึ้นเท่ากับ 4 ให้เปลี่ยนสถานะจาก 'S' (Selected) กลายเป็น 'G(x)' (Growth + ตามด้วยจำนวนต้นไม้)
                         
-                        //Tree Type == 2++
-                        basic_Tree.Tree_Type_ID = 1;
-                        basic_Tree.Tree_Name = "Basic Tree";
-                        basic_Tree.Tree_HP = 100;
-                        basic_Tree.Plant_Date = cDate;
-                        basic_Tree.Create_Date = cDate;
-                        basic_Tree.Update_Date = cDate;
-                        basic_Tree.Tree_Status = "S";
-                        basic_Tree.Tree_isDead = "N";
+                        tree.Tree_Status = "G" + user_tree_count;
+                        
 
-                        _context.Add(basic_Tree);
+                        //ต้นแรกปลูกสำเร็จ โตแล้ว !!
+                        if (tree.Tree_Status == "G1")
+                        {
+
+                            //new Tree Created with Type Tree == 2
+                            Trees basic_Tree = new Trees();
+
+                            basic_Tree.User_ID = user_id;
+                            basic_Tree.Tree_Level = 1;
+                            basic_Tree.Tree_EXP = 0;
+
+                            //Tree Type == 2++
+                            basic_Tree.Tree_Type_ID = 2;
+                            basic_Tree.Tree_Name = "Tree_LV2";
+                            basic_Tree.Tree_HP = 80;
+                            basic_Tree.Plant_Date = cDate;
+                            basic_Tree.Create_Date = cDate;
+                            basic_Tree.Update_Date = cDate;
+                            basic_Tree.Tree_Status = "S";
+                            basic_Tree.Tree_isDead = "N";
+
+                            _context.Add(basic_Tree);
+                        }
+                        //ต้นที่สองปลูกสำเร็จ
+                        else if (tree.Tree_Status == "G2")
+                        {
+                            //new Tree Created with Type Tree == 3
+                            //new Tree Created with Type Tree == 2
+                            Trees basic_Tree = new Trees();
+
+                            basic_Tree.User_ID = user_id;
+                            basic_Tree.Tree_Level = 1;
+                            basic_Tree.Tree_EXP = 0;
+
+                            //Tree Type == 2++
+                            basic_Tree.Tree_Type_ID = 3;
+                            basic_Tree.Tree_Name = "Tree_LV3";
+                            basic_Tree.Tree_HP = 60;
+                            basic_Tree.Plant_Date = cDate;
+                            basic_Tree.Create_Date = cDate;
+                            basic_Tree.Update_Date = cDate;
+                            basic_Tree.Tree_Status = "S";
+                            basic_Tree.Tree_isDead = "N";
+
+                            _context.Add(basic_Tree);
+                        }
+                        //ต้นที่สามปลูกสำเร็จ
+                        else if (tree.Tree_Status == "G3")
+                        {
+                            //new Tree Created with Type Tree == 4
+                            //new Tree Created with Type Tree == 3
+                            //new Tree Created with Type Tree == 2
+                            Trees basic_Tree = new Trees();
+
+                            basic_Tree.User_ID = user_id;
+                            basic_Tree.Tree_Level = 1;
+                            basic_Tree.Tree_EXP = 0;
+
+                            //Tree Type == 2++
+                            basic_Tree.Tree_Type_ID = 3;
+                            basic_Tree.Tree_Name = "Tree_LV4";
+                            basic_Tree.Tree_HP = 40;
+                            basic_Tree.Plant_Date = cDate;
+                            basic_Tree.Create_Date = cDate;
+                            basic_Tree.Update_Date = cDate;
+                            basic_Tree.Tree_Status = "S";
+                            basic_Tree.Tree_isDead = "N";
+
+                            _context.Add(basic_Tree);
+                        }
+                        //ต้นที่สี่ปลูกสำเร็จ !! +  Reward 
+                        else if (tree.Tree_Status == "G4")
+                        {
+                            
+                        }
+                        //ERROR
+                        else
+                        {
+
+                        }
+                    
+
+
 
                     }
                 }
