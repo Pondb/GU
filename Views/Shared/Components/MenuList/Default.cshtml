@@ -128,7 +128,7 @@
                                     }
                                 </a>
                                 <a asp-area="" asp-controller="Users" asp-action="ChangePassword" class="dropdown-item">Change Password</a>
-                                <a asp-area="" asp-controller="Home" asp-action="Logout" class="dropdown-item">Log out</a>
+                                <a asp-area="" asp-controller="Home" asp-action="Logout" onclick="btnLogoutClick()" class="dropdown-item">Log out</a>
 
                             </div>
                         </li>
@@ -181,6 +181,13 @@
 
 <br />
 <br />
+
+<script>
+    function btnLogoutClick() {
+
+        localStorage.removeItem(0);
+    }
+</script>
 
 
 

@@ -2,6 +2,15 @@
     ViewData["Title"] = "Home Page";
 }
 
+@{
+    @using Microsoft.AspNetCore.Http
+}
+
+@{
+    var user_id = Context.Session.GetString("User_ID");
+}
+
+
 
 <script language="javascript" type="text/javascript">
 
@@ -53,7 +62,6 @@
     }
 
     .circle {
-        
         border-radius: 50px;
         font-size: 20px;
         color: #fff;
@@ -229,7 +237,7 @@
     </div>
     <div class="col-md-10">
 
-        <div id="growypSupport" >
+        <div id="growypSupport">
 
             <div class="row">
                 <br />
@@ -241,7 +249,7 @@
 
                 <div class="col-md-12">
                     <br />
-                    <h1  class="jumbotron-fluid">Something Growyp can do.</h1>
+                    <h1 class="jumbotron-fluid">Something Growyp can do.</h1>
                     <p class="dark-gray-font">Our features for people that want to enjoy planning with feeling like play a game.</p>
 
 
@@ -343,8 +351,8 @@
 
                 <div class="col-md-4 text-center">
 
-                    
-                    
+
+
                     <img class="img-fluid circle" style="background-color:#332421" src="~/img/growup/4th_content/simple.png" width="15%" />
 
                     <div>
@@ -431,6 +439,40 @@
 
 
 </div>
+
+<script>
+    window.onload = function () {
+
+        var localEmail = localStorage.getItem(0);
+        var user_id = '@user_id';
+
+        if (localEmail != "" && localEmail != null && user_id == "") {
+              $.ajax
+        ({
+
+            url: '@Url.Action("autoLogin", "Home")',
+            cache: false,
+            type: 'POST',
+            data: {
+                email: localEmail
+
+            },
+            success: function (data) {
+
+            },
+            error: function () {
+                BootstrapDialog.show({ title: 'Error', type: BootstrapDialog.TYPE_DANGER, message: 'AJAX ERROR' });
+            },
+        });
+        }
+        else {
+
+        }
+
+
+
+    };
+</script>
 
 
 

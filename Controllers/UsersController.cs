@@ -131,7 +131,7 @@ namespace GU.Controllers
                     String cTime = _CLSR.GetTimeNow("");
 
 
-                    user.Password = Password;
+                    user.Password = _CLSR.EncryptSHA512(Password);
                     user.Last_Update = cDate;
 
 
@@ -198,6 +198,9 @@ namespace GU.Controllers
                         //ควรเปิด Transaction ทุกครั้งที่มีการเปลี่ยนแปลงข้อมูลใน Table
                         using (IDbContextTransaction dbTran = _context.Database.BeginTransaction())
                         {
+
+                            user.Password = _CLSR.EncodeHMAC_SHA512(user.Password);
+
                             String cDate = _CLSR.GetDateNow("");
                             String cTime = _CLSR.GetTimeNow("");
 

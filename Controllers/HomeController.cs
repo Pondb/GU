@@ -44,7 +44,31 @@ namespace GU.Controllers
         }
 
         [HttpPost]
-        public ActionResult auth_login(string email, string password)
+        public ActionResult autoLogin(string email)
+        {
+
+            var selectUser = _context.User.Where(i => i.Email.Equals(email)).SingleOrDefault();
+
+            if (selectUser != null)
+            {
+                auth_login(selectUser.Email,selectUser.Password,"YES");
+
+                
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+
+            return RedirectToAction("Add_Task", "Todo_Task");
+
+        }
+
+        
+
+        [HttpPost]
+        public ActionResult auth_login(string email, string password, string rememberMe)
         {
 
             
@@ -54,6 +78,16 @@ namespace GU.Controllers
 
             if (user != null)
             {
+                if (password != null && rememberMe == "Y" || rememberMe == "N")
+                {
+                    password = _CLSR.EncodeHMAC_SHA512(password);
+                }
+                else if (password != null)
+                {
+                   
+                }
+                
+
                 //Login success
                 if (email.Equals(user.Email) && password.Equals(user.Password) && user.Wrong_Password_Count < 5 && user.User_Status == "Y" && user.User_isLock == "N")
                 {
@@ -164,7 +198,7 @@ namespace GU.Controllers
 
                     ViewData["isLogIn"] = 1;
                     //TempData["msg"] = _CLSR.GetScriptAlertPopUp("Success", "Login Successfully!", "", "S");
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Add_Task", "Todo_Task");
                 }
                 else
                 {

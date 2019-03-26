@@ -11,6 +11,8 @@ using GU.Class;
 using Microsoft.AspNetCore.Http;
 using System.Web;
 using Microsoft.EntityFrameworkCore.Storage;
+using System.Text;
+using System.Security.Cryptography;
 
 namespace GU.Class
 {
@@ -146,7 +148,34 @@ namespace GU.Class
 
         }
 
-       
+        public string EncodeHMAC_SHA512(string input)
+        {
+            string key = "inventech";
+
+            ASCIIEncoding encoding = new ASCIIEncoding();
+
+            byte[] keyByte = encoding.GetBytes(key);
+
+            HMACSHA512 myhmacsha512 = new HMACSHA512(keyByte);
+
+            byte[] byteArray = Encoding.UTF8.GetBytes(input);
+
+            var hashValue = myhmacsha512.ComputeHash(byteArray);
+
+            return Convert.ToBase64String(hashValue);
+
+        }
+
+        public string EncryptSHA512(string data)
+        {
+            SHA512CryptoServiceProvider SHA512 = new SHA512CryptoServiceProvider();
+            Byte[] strx = System.Text.Encoding.UTF8.GetBytes(data);
+            Byte[] HashValue = SHA512.ComputeHash(strx);
+            return System.Convert.ToBase64String(HashValue);
+        }
+
+
+
 
         //Check Task is over Due Date
         public void CheckTaskDueDate(int user_id,int hpDown)
@@ -241,16 +270,16 @@ namespace GU.Class
             {
                 tree.Tree_EXP = tree.Tree_EXP + exp_input;
 
-                if (tree.Tree_Level < 4 && tree.Tree_EXP > 100)
+                if (tree.Tree_Level < 3 && tree.Tree_EXP > 100)
                 {
                     var remainEXP = tree.Tree_EXP - 100;
 
                     tree.Tree_EXP = remainEXP;
                     tree.Tree_Level = tree.Tree_Level + 1;
 
-                    if (tree.Tree_Level == 4)
+                    if (tree.Tree_Level == 3)
                     {
-                        //ถ้าต้นไม้เดิม Level ขึ้นเท่ากับ 4 ให้เปลี่ยนสถานะจาก 'S' (Selected) กลายเป็น 'G(x)' (Growth + ตามด้วยจำนวนต้นไม้)
+                        //ถ้าต้นไม้เดิม Level ขึ้นเท่ากับ 3 ให้เปลี่ยนสถานะจาก 'S' (Selected) กลายเป็น 'G(x)' (Growth + ตามด้วยจำนวนต้นไม้)
                         
                         tree.Tree_Status = "G" + user_tree_count;
                         

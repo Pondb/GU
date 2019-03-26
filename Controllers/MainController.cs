@@ -170,17 +170,17 @@ namespace GU.Controllers
                             ViewBag.G1_IMG = userTree_G1.Tree_Type.Tree_LV3_IMG;
                         }
                     }
-                    else if (userTree_G1.Tree_Level == 4)
-                    {
-                        if (userTree_G1.Tree_isDead == "Y")
-                        {
-                            ViewBag.G1_IMG = userTree_G1.Tree_Type.Tree_LV4_DIE;
-                        }
-                        else
-                        {
-                            ViewBag.G1_IMG = userTree_G1.Tree_Type.Tree_LV4_IMG;
-                        }
-                    }
+                    //else if (userTree_G1.Tree_Level == 4)
+                    //{
+                    //    if (userTree_G1.Tree_isDead == "Y")
+                    //    {
+                    //        ViewBag.G1_IMG = userTree_G1.Tree_Type.Tree_LV4_DIE;
+                    //    }
+                    //    else
+                    //    {
+                    //        ViewBag.G1_IMG = userTree_G1.Tree_Type.Tree_LV4_IMG;
+                    //    }
+                    //}
 
                 }
 
@@ -221,17 +221,17 @@ namespace GU.Controllers
                             ViewBag.G2_IMG = userTree_G2.Tree_Type.Tree_LV3_IMG;
                         }
                     }
-                    else if (userTree_G2.Tree_Level == 4)
-                    {
-                        if (userTree_G2.Tree_isDead == "Y")
-                        {
-                            ViewBag.G2_IMG = userTree_G2.Tree_Type.Tree_LV4_DIE;
-                        }
-                        else
-                        {
-                            ViewBag.G2_IMG = userTree_G2.Tree_Type.Tree_LV4_IMG;
-                        }
-                    }
+                    //else if (userTree_G2.Tree_Level == 4)
+                    //{
+                    //    if (userTree_G2.Tree_isDead == "Y")
+                    //    {
+                    //        ViewBag.G2_IMG = userTree_G2.Tree_Type.Tree_LV4_DIE;
+                    //    }
+                    //    else
+                    //    {
+                    //        ViewBag.G2_IMG = userTree_G2.Tree_Type.Tree_LV4_IMG;
+                    //    }
+                    //}
 
                 }
 
@@ -272,17 +272,17 @@ namespace GU.Controllers
                             ViewBag.G3_IMG = userTree_G3.Tree_Type.Tree_LV3_IMG;
                         }
                     }
-                    else if (userTree_G3.Tree_Level == 4)
-                    {
-                        if (userTree_G3.Tree_isDead == "Y")
-                        {
-                            ViewBag.G3_IMG = userTree_G3.Tree_Type.Tree_LV4_DIE;
-                        }
-                        else
-                        {
-                            ViewBag.G3_IMG = userTree_G3.Tree_Type.Tree_LV4_IMG;
-                        }
-                    }
+                    //else if (userTree_G3.Tree_Level == 4)
+                    //{
+                    //    if (userTree_G3.Tree_isDead == "Y")
+                    //    {
+                    //        ViewBag.G3_IMG = userTree_G3.Tree_Type.Tree_LV4_DIE;
+                    //    }
+                    //    else
+                    //    {
+                    //        ViewBag.G3_IMG = userTree_G3.Tree_Type.Tree_LV4_IMG;
+                    //    }
+                    //}
 
                 }
 
@@ -326,17 +326,17 @@ namespace GU.Controllers
                             ViewBag.TreeIMG = userTree_01.Tree_Type.Tree_LV3_IMG;
                         }
                     }
-                    else if (userTree_01.Tree_Level == 4)
-                    {
-                        if (userTree_01.Tree_isDead == "Y")
-                        {
-                            ViewBag.TreeIMG = userTree_01.Tree_Type.Tree_LV4_DIE;
-                        }
-                        else
-                        {
-                            ViewBag.TreeIMG = userTree_01.Tree_Type.Tree_LV4_IMG;
-                        }
-                    }
+                    //else if (userTree_01.Tree_Level == 4)
+                    //{
+                    //    if (userTree_01.Tree_isDead == "Y")
+                    //    {
+                    //        ViewBag.TreeIMG = userTree_01.Tree_Type.Tree_LV4_DIE;
+                    //    }
+                    //    else
+                    //    {
+                    //        ViewBag.TreeIMG = userTree_01.Tree_Type.Tree_LV4_IMG;
+                    //    }
+                    //}
                     else
                     {
 

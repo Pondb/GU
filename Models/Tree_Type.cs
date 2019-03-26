@@ -19,7 +19,7 @@ namespace GU.Models
 
         public String Tree_LV3_IMG { get; set; }
 
-        public String Tree_LV4_IMG { get; set; }
+        //public String Tree_LV4_IMG { get; set; }
 
         public String Tree_Type_Name { get; set; }
 

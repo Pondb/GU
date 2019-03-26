@@ -22,7 +22,6 @@
 
 
 
-    @*<script src="~/js/bootstrap-dialog.js"></script>*@
     <script src="~/vendor/raphael/raphael.min.js"></script>
 
     <script src="~/vendor/morrisjs/morris.min.js"></script>
@@ -89,10 +88,6 @@
             font-family: 'Titillium Web', sans-serif;
             background-color: white;
         }
-
-
-
-       
     </style>
 
 
@@ -131,6 +126,18 @@
 
             var Email = $('#input_Email').val();
             var Password = $('#input_Password').val();
+
+            if (document.getElementById('rememberMe').checked) {
+
+                $('#rememberMe').val("Y");
+            }
+            else {
+                $('#rememberMe').val("N");
+            }
+
+            var RememberMe = $('#rememberMe').val();
+
+            
             $.ajax
                 ({
 
@@ -139,7 +146,8 @@
                     type: 'POST',
                     data: {
                         email: Email,
-                        password: Password
+                        password: Password,
+                        rememberMe: RememberMe
                     },
                     success: function (data) {
 
@@ -154,6 +162,7 @@
                             $("#msgLogin").show();
                         }
                         else if (data == "AUTH_PASS") {
+                            localStorage.setItem(0, Email);
                             location.reload();
                         }
                         else if (data == "AUTH_LOCK") {
@@ -263,7 +272,7 @@
         function alertModal_Popup(title,type_color,appendHTML) {
             $('#alertModal #alertModal_Title').text(title);
 
-            
+
             var color = "";
 
             if (type_color == "danger") {
@@ -301,9 +310,9 @@
             $('#alertModal').modal();
         }
 
-        
 
-       
+
+
 
 
 
@@ -470,6 +479,13 @@
                                 <div id="msgLogin">
                                     <h5 id="msgReturn" style="color:red">Invalid Email or Password</h5>
 
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="N" id="rememberMe" name="rememberMe">
+                                    <label class="form-check-label" for="rememberMe_Label">
+                                        <small>Remember me</small>
+                                    </label>
                                 </div>
 
                                 <div class="form-group">
