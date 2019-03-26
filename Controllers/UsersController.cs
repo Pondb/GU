@@ -147,16 +147,16 @@ namespace GU.Controllers
 
 
                     //Temp Message เพื่อขึ้น Alert ป๊อปอัพแสดง
-                    
+
 
                     TempData["msg"] = _CLSR.GetScriptAlertPopUp("Success", "Password changed successfully.", "", "D");
                     return RedirectToAction("Index", "Home");
                 }
 
 
-                
+
             }
-            
+
         }
 
 
@@ -257,11 +257,88 @@ namespace GU.Controllers
                     }
                 }
 
-                
 
-                
+
+
             }
             return View(user);
+        }
+
+        [HttpGet]
+        public IActionResult ResetTree()
+        {
+
+            var user_id_string = HttpContext.Session.GetString("User_ID");
+            var user_id = 0;
+
+            try
+            {
+                user_id = Convert.ToInt32(user_id_string);
+            }
+            catch
+            {
+                user_id = 0;
+            }
+
+
+            var userTree = _context.Trees
+                            .Include(i => i.UserInfo)
+                            .Include(i => i.Tree_Type)
+                            .Where(c => c.User_ID == user_id && c.Tree_Status == "S").SingleOrDefault();
+
+            var userTree_G1 = _context.Trees.Include(i => i.UserInfo)
+                .Include(i => i.Tree_Type)
+                .Where(c => c.User_ID == user_id && c.Tree_Status == "G1").SingleOrDefault();
+
+            var userTree_G2 = _context.Trees.Include(i => i.UserInfo)
+                .Include(i => i.Tree_Type)
+                .Where(c => c.User_ID == user_id && c.Tree_Status == "G2").SingleOrDefault();
+
+
+            var userTree_G3 = _context.Trees.Include(i => i.UserInfo)
+                .Include(i => i.Tree_Type)
+                .Where(c => c.User_ID == user_id && c.Tree_Status == "G3").SingleOrDefault();
+
+
+            
+
+
+
+            if (userTree_G1 != null)
+            {
+                _context.Remove(userTree_G1);
+            }
+            if (userTree_G2 != null)
+            {
+                _context.Remove(userTree_G2);
+            }
+            if (userTree_G3 != null)
+            {
+                _context.Remove(userTree_G3);
+            }
+
+            String cDate = _CLSR.GetDateNow("");
+            String cTime = _CLSR.GetTimeNow("");
+
+           
+            userTree.Tree_Level = 1;
+            userTree.Tree_EXP = 0;
+            userTree.Tree_Type_ID = 1;
+            userTree.Tree_Name = "Basic Tree";
+            userTree.Tree_HP = 100;
+            userTree.Plant_Date = cDate;
+            userTree.Create_Date = cDate;
+            userTree.Update_Date = cDate;
+            userTree.Tree_Status = "S";
+            userTree.Tree_isDead = "N";
+
+
+
+            _context.SaveChanges();
+
+
+
+            return RedirectToAction("Edit", new { id = user_id });
         }
 
         

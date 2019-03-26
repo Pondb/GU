@@ -127,16 +127,6 @@
             var Email = $('#input_Email').val();
             var Password = $('#input_Password').val();
 
-            if (document.getElementById('rememberMe').checked) {
-
-                $('#rememberMe').val("Y");
-            }
-            else {
-                $('#rememberMe').val("N");
-            }
-
-            var RememberMe = $('#rememberMe').val();
-
             
             $.ajax
                 ({
@@ -146,8 +136,7 @@
                     type: 'POST',
                     data: {
                         email: Email,
-                        password: Password,
-                        rememberMe: RememberMe
+                        password: Password
                     },
                     success: function (data) {
 
@@ -162,7 +151,7 @@
                             $("#msgLogin").show();
                         }
                         else if (data == "AUTH_PASS") {
-                            localStorage.setItem(0, Email);
+                            
                             location.reload();
                         }
                         else if (data == "AUTH_LOCK") {
@@ -183,29 +172,11 @@
 
 
 
-            //$('#dataTables').DataTable({
-            //    responsive: true,
-            //    "autoWidth": false,
-            //    dom: 'Bfrtip',
-            //    buttons: [
-            //        'copy', 'excel', 'print'
-            //    ]
-            //    //scrollX: "100%"
-            //});
-
-            //Hide LoginModal
-
             $('#modalOpen').hide();
             $('#msgLogin').hide();
 
 
 
-
-
-            //ทำ Alert Bootstrap ใหม่ทั้งหมด
-            //$('#alertTab').addClass("show");
-            //$('#alertText').empty();
-            //$('#alertText').append("<strong>Success!!</strong>");
 
 
             $("a[data-toggle=\"tab\"]").on("shown.bs.tab", function (e) {
@@ -449,16 +420,12 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        @*<h4 class="modal-title">Login</h4>*@
+
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
 
                     </div>
                     <div class="modal-body">
 
-                        @*@HttpContext.Current.Session["Username"].ToString();*@
-
-                        @*@using (Html.BeginForm("Login", "Home", FormMethod.Post, new { @class = "ui large form" }))
-                        {*@
                         <div class="row">
                             <div class="col-md-1">
 
@@ -481,13 +448,7 @@
 
                                 </div>
 
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="N" id="rememberMe" name="rememberMe">
-                                    <label class="form-check-label" for="rememberMe_Label">
-                                        <small>Remember me</small>
-                                    </label>
-                                </div>
-
+                             
                                 <div class="form-group">
                                     <a asp-area="" asp-controller="Users" asp-action="Create"><small>Sign up</small></a>
 

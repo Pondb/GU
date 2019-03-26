@@ -2,13 +2,6 @@
     ViewData["Title"] = "Home Page";
 }
 
-@{
-    @using Microsoft.AspNetCore.Http
-}
-
-@{
-    var user_id = Context.Session.GetString("User_ID");
-}
 
 
 
@@ -19,25 +12,7 @@
 
     $(document).ready(function () {
 
-
-        @*var isLogin;
-
-        isLogin = @ViewData["isLogIn"];
-
-        //ยังไม่เสร็จ ตอนนี้เช็คแค่ว่า POST แล้วเปลี่ยน USER_ID
-
-        if (isLogin == 0) {
-            document.getElementById("modalOpen").click();
-        }
-        else {*@
-
-        //}
-
-
-
-        //$('#dialogCancel').click(function () {
-        //    $.magnificPopup.close();
-        //});
+    
 
     });
 
@@ -439,40 +414,6 @@
 
 
 </div>
-
-<script>
-    window.onload = function () {
-
-        var localEmail = localStorage.getItem(0);
-        var user_id = '@user_id';
-
-        if (localEmail != "" && localEmail != null && user_id == "") {
-              $.ajax
-        ({
-
-            url: '@Url.Action("autoLogin", "Home")',
-            cache: false,
-            type: 'POST',
-            data: {
-                email: localEmail
-
-            },
-            success: function (data) {
-
-            },
-            error: function () {
-                BootstrapDialog.show({ title: 'Error', type: BootstrapDialog.TYPE_DANGER, message: 'AJAX ERROR' });
-            },
-        });
-        }
-        else {
-
-        }
-
-
-
-    };
-</script>
 
 
 

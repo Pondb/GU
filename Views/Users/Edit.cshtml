@@ -198,8 +198,8 @@
                                     @*<h3>( @Model.First_Name @Model.Last_Name )</h3>*@
                                     <h3 style="color:dodgerblue">{{f_name}} {{l_name}}</h3>
                                 </div>
-                                
-                                
+
+
                                 <hr />
                             </div>
 
@@ -222,7 +222,7 @@
                                 <div class="form-group">
                                     <label>First Name:</label>
                                     <input asp-for="First_Name" v-model="f_name" id="First_Name" class="form-control" />
-                                    
+
                                 </div>
                             </div>
 
@@ -255,6 +255,20 @@
                         </div>
 
                         <br />
+                     
+                        <div class="row">
+                           
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <a asp-area="" asp-controller="Users" asp-action="ResetTree" onclick="confirm('Are you sure?')" ><button type="button" class="btn btn-outline-danger">Reset Tree</button></a>
+                                    
+                                </div>
+
+                            </div>
+                         
+                        </div>
+
+                        <hr />
 
                         <div class="row">
                             <div class="col-md-10">
@@ -272,7 +286,7 @@
 
                         </div>
 
-                    
+
 
                     </div>
                 </div>

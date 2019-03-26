@@ -43,32 +43,11 @@ namespace GU.Controllers
 
         }
 
-        [HttpPost]
-        public ActionResult autoLogin(string email)
-        {
-
-            var selectUser = _context.User.Where(i => i.Email.Equals(email)).SingleOrDefault();
-
-            if (selectUser != null)
-            {
-                auth_login(selectUser.Email,selectUser.Password,"YES");
-
-                
-            }
-            else
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
-
-            return RedirectToAction("Add_Task", "Todo_Task");
-
-        }
-
+       
         
 
         [HttpPost]
-        public ActionResult auth_login(string email, string password, string rememberMe)
+        public ActionResult auth_login(string email, string password)
         {
 
             
@@ -78,76 +57,80 @@ namespace GU.Controllers
 
             if (user != null)
             {
-                if (password != null && rememberMe == "Y" || rememberMe == "N")
+                if (password != null)
                 {
                     password = _CLSR.EncodeHMAC_SHA512(password);
+
+                    //Login success
+                    if (email.Equals(user.Email) && password.Equals(user.Password) && user.Wrong_Password_Count < 5 && user.User_Status == "Y" && user.User_isLock == "N")
+                    {
+
+                        returnData = "AUTH_PASS";
+                        Login(email, password);
+
+
+                    }
+                    //Email==Email, Pass== Pass but Account locked
+                    else if (email.Equals(user.Email) && password.Equals(user.Password) && user.Wrong_Password_Count >= 5)
+                    {
+                        returnData = "AUTH_LOCK";
+                        using (IDbContextTransaction dbTran = _context.Database.BeginTransaction())
+                        {
+                            try
+                            {
+                                user.User_Status = "N";
+                                user.User_isLock = "Y";
+
+                                _context.Update(user);
+                                _context.SaveChanges();
+
+                                dbTran.Commit();
+                            }
+                            catch (Exception e)
+                            {
+                                TempData["msg"] = _CLSR.GetAlert("Error: " + e.Message);
+                                return RedirectToAction("Index", "Home");
+                            }
+                        }
+
+                    }
+                    //Email == email but Pass is not and password count 5+
+                    else if (email.Equals(user.Email) && password != user.Password && user.Wrong_Password_Count >= 5)
+                    {
+                        returnData = "AUTH_LOCK";
+                    }
+                    //Email != email, Pass != pass
+                    else
+                    {
+                        returnData = "AUTH_NOT";
+                        using (IDbContextTransaction dbTran = _context.Database.BeginTransaction())
+                        {
+                            try
+                            {
+                                user.Wrong_Password_Count = user.Wrong_Password_Count + 1;
+
+                                _context.Update(user);
+                                _context.SaveChanges();
+
+                                dbTran.Commit();
+                            }
+                            catch (Exception e)
+                            {
+                                TempData["msg"] = _CLSR.GetAlert("Error: " + e.Message);
+                                return RedirectToAction("Index", "Home");
+                            }
+                        }
+                    }
                 }
-                else if (password != null)
+                else
                 {
-                   
+
+
+
                 }
                 
 
-                //Login success
-                if (email.Equals(user.Email) && password.Equals(user.Password) && user.Wrong_Password_Count < 5 && user.User_Status == "Y" && user.User_isLock == "N")
-                {
-
-                    returnData = "AUTH_PASS";
-                    Login(email, password);
-
-
-                }
-                //Email==Email, Pass== Pass but Account locked
-                else if (email.Equals(user.Email) && password.Equals(user.Password) && user.Wrong_Password_Count >= 5)
-                {
-                    returnData = "AUTH_LOCK";
-                    using (IDbContextTransaction dbTran = _context.Database.BeginTransaction())
-                    {
-                        try
-                        {
-                            user.User_Status = "N";
-                            user.User_isLock = "Y";
-
-                            _context.Update(user);
-                            _context.SaveChanges();
-
-                            dbTran.Commit();
-                        }
-                        catch (Exception e)
-                        {
-                            TempData["msg"] = _CLSR.GetAlert("Error: " + e.Message);
-                            return RedirectToAction("Index", "Home");
-                        }
-                    }
-
-                }
-                //Email == email but Pass is not and password count 5+
-                else if (email.Equals(user.Email) && password != user.Password && user.Wrong_Password_Count >= 5)
-                {
-                    returnData = "AUTH_LOCK";
-                }
-                //Email != email, Pass != pass
-                else
-                {
-                    returnData = "AUTH_NOT";
-                    using (IDbContextTransaction dbTran = _context.Database.BeginTransaction())
-                    {
-                        try
-                        {
-                            user.Wrong_Password_Count = user.Wrong_Password_Count + 1;
-
-                            _context.Update(user);
-                            _context.SaveChanges();
-
-                            dbTran.Commit();
-                        }
-                        catch (Exception e)
-                        {
-                            TempData["msg"] = _CLSR.GetAlert("Error: " + e.Message);
-                            return RedirectToAction("Index", "Home");
-                        }
-                    }
-                }
+                
             }
             else
             {
