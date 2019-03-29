@@ -204,6 +204,18 @@ namespace GU.Controllers
                             String cDate = _CLSR.GetDateNow("");
                             String cTime = _CLSR.GetTimeNow("");
 
+                            
+
+                            //ROLE ID 1 คือ Admin
+                            //ROLE ID 2 คือ Normal User
+                            user.Role_ID = 2;
+                            user.Birthdate = _CLSR.ConvertDatePicker(user.Birthdate);
+                            user.Wrong_Password_Count = 0;
+                            user.Last_Login = cDate;
+                            user.Last_Update = cDate;
+                            user.User_Status = "Y";
+                            user.User_isLock = "N";
+
                             Trees basic_Tree = new Trees();
 
                             basic_Tree.User_ID = userID;
@@ -218,22 +230,16 @@ namespace GU.Controllers
                             basic_Tree.Tree_Status = "S";
                             basic_Tree.Tree_isDead = "N";
 
-                            //ROLE ID 1 คือ Admin
-                            //ROLE ID 2 คือ Normal User
-                            user.Role_ID = 2;
-                            user.Birthdate = _CLSR.ConvertDatePicker(user.Birthdate);
-                            user.Wrong_Password_Count = 0;
-                            user.Last_Login = cDate;
-                            user.Last_Update = cDate;
-                            user.User_Status = "Y";
-                            user.User_isLock = "N";
 
 
 
 
+                            
+                            _context.Add(user);
+                            
+                            await _context.SaveChangesAsync();
 
                             _context.Add(basic_Tree);
-                            _context.Add(user);
                             await _context.SaveChangesAsync();
 
                             //ถ้าบันทึกข้อมูลเสร็จ ให้ Commit เพื่อยืนยันการเซฟข้อมูล

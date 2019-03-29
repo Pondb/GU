@@ -39,12 +39,29 @@ namespace GU.Controllers
         public JsonResult GetTasks(ToDo_Task Meeting_Info)
         {
 
+            string user_id_string = HttpContext.Session.GetString("User_ID");
+            int user_id;
+
+
+            try
+            {
+                user_id = Convert.ToInt32(user_id_string);
+            }
+            catch
+            {
+                user_id = 0;
+                
+            }
+
+
+
+
             //var events = _context.Meeting_Info.Include("Meeting_Type").ToList();
 
             //เลือกเฉพาะที่ยังไม่เสร็จ
             //var todoTask = _context.ToDo_Task.Where(i=>i.Task_isComplete != "Y" && i.Task_isFail != "Y").ToList();
 
-            var todoTask = _context.ToDo_Task.ToList();
+            var todoTask = _context.ToDo_Task.Where(i=>i.User_ID == user_id && i.Task_Parent_ID == 0).ToList();
 
 
             return Json(todoTask);

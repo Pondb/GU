@@ -22,7 +22,7 @@ namespace GU.Data
         public DbSet<User> User { get; set; }
         public DbSet<ToDo_Task> ToDo_Task { get; set; }
         public DbSet<Trees> Trees { get; set; }
-        public DbSet<UserMapping> UserMapping { get; set; }
+        //public DbSet<UserMapping> UserMapping { get; set; }
         public DbSet<Tree_Type> Tree_Type { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -32,7 +32,7 @@ namespace GU.Data
             modelBuilder.Entity<ToDo_Task>().ToTable("ToDo_Task");
             modelBuilder.Entity<Trees>().ToTable("Trees");
             modelBuilder.Entity<Tree_Type>().ToTable("Tree_Type");
-            modelBuilder.Entity<UserMapping>().ToTable("UserMapping").HasKey(c => new { c.User_ID, c.Tree_ID });
+            //modelBuilder.Entity<UserMapping>().ToTable("UserMapping").HasKey(c => new { c.User_ID, c.Tree_ID });
 
 
 

@@ -96,9 +96,11 @@ namespace GU
             services.AddDbContext<GU_DB>(options =>
        options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            
 
-            var serviceProvider = services.BuildServiceProvider();
-            DBInitialize.INIT(serviceProvider);
+
+            //var serviceProvider = services.BuildServiceProvider();
+            //DBInitialize.INIT(serviceProvider);
 
             services.AddSingleton<IFileProvider>(
             new PhysicalFileProvider(
@@ -130,12 +132,14 @@ namespace GU
             //});
 
 
-            //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+
+
             app.UseSession();
 
             if (env.IsDevelopment())
@@ -150,7 +154,7 @@ namespace GU
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseCookiePolicy();
+            //app.UseCookiePolicy();
 
             app.UseMvc(routes =>
             {
@@ -159,5 +163,7 @@ namespace GU
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
+
+
     }
 }
