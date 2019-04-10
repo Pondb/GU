@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAOln/yFDdo0K3iJltE1JUBgAAAAACAAAAAAAQZgAAAAEAACAAAAB8wQR8SRu+sj9FDdbhO6CNq16aoILka/i8o4T717MsBQAAAAAOgAAAAAIAACAAAAA2kGgQa8H9l07CkWfj3E3Ex8lMs32rsUkn/REr1Ic96SAAAACNKdrZM6slGUk32l/QfuSaE6jDY2MTM80hUJBX8HQqwEAAAADfQ9Uep25vWhDo8Y+xzGX1VB5CHSkrcs6m6QaKJP2KNZvy24Xksz3qXc6Ozytg0le3mBYcVCY//VC037EJ01bs</EncryptedPassword>
+    <_PublishTargetUrl>ftp://growyp.com/ftp://growypco@growyp.com/GU-NETCORE-2.growyp.com</_PublishTargetUrl>
+  </PropertyGroup>
+</Project>

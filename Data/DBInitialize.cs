@@ -11,9 +11,9 @@ namespace GU.Data
     {
         public static void INIT(IServiceProvider serviceProvider) {
 
-            var context = new GU_DB(serviceProvider.GetRequiredService<DbContextOptions<GU_DB>>());
+            //var context = new GU_DB(serviceProvider.GetRequiredService<DbContextOptions<GU_DB>>());
 
-            context.Database.EnsureCreated();
+            //context.Database.EnsureCreated();
             
         }
     }

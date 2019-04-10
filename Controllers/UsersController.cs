@@ -18,12 +18,15 @@ namespace GU.Controllers
     {
         private readonly GU_DB _context;
         private ClassResource _CLSR;
+        private HomeController HCON;
         private readonly String _Module = "Users";
 
         public UsersController(GU_DB context, IConfiguration configuration)
         {
             _context = context;
             _CLSR = new ClassResource(_context, configuration);
+            HCON = new HomeController(_context, configuration);
+            
 
         }
 
@@ -216,9 +219,21 @@ namespace GU.Controllers
                             user.User_Status = "Y";
                             user.User_isLock = "N";
 
+                            
+
+
+
+
+
+                            
+                            _context.Add(user);
+                            
+                            await _context.SaveChangesAsync();
+
+
                             Trees basic_Tree = new Trees();
 
-                            basic_Tree.User_ID = userID;
+                            basic_Tree.User_ID = user.User_ID;
                             basic_Tree.Tree_Level = 1;
                             basic_Tree.Tree_EXP = 0;
                             basic_Tree.Tree_Type_ID = 1;
@@ -230,15 +245,6 @@ namespace GU.Controllers
                             basic_Tree.Tree_Status = "S";
                             basic_Tree.Tree_isDead = "N";
 
-
-
-
-
-                            
-                            _context.Add(user);
-                            
-                            await _context.SaveChangesAsync();
-
                             _context.Add(basic_Tree);
                             await _context.SaveChangesAsync();
 
@@ -247,10 +253,20 @@ namespace GU.Controllers
 
                             //ถ้าไม่สำเร็จให้ RollBack();
 
+                            //try
+                            //{
+                            //    HCON.Login(user.Email, user.Password);
+                            //}
+                            //catch (Exception e)
+                            //{
+                            //    TempData["msg"] = "<script>alert('"+ e.Message +"')</script>";
 
+                            //    return RedirectToAction("Index", "Home");
+                            //}
+                            TempData["msg"] = "<script>alert('Sign Up successfully')</script>";
                             //Temp Message เพื่อขึ้น Alert ป๊อปอัพแสดง
-                            TempData["msg"] = _CLSR.GetScriptAlertPopUp("Success", "Register Successfully!", "", "S");
-                            return RedirectToAction("Index", "Home");
+                            //TempData["msg"] = _CLSR.GetScriptAlertPopUp("Success", "Register Successfully!", "", "S");
+
                         }
 
 

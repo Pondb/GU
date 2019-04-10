@@ -8,16 +8,29 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using GU.Controllers;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.Extensions.Configuration;
+using System;
 
 
 namespace GU.Data
 {
     public class GU_DB : DbContext
     {
-        public GU_DB(DbContextOptions<GU_DB> options) : base(options)
-        {
 
-        }
+        public GU_DB(DbContextOptions<GU_DB> options)
+            : base(options)
+        { }
+
+
+        //public GU_DB(DbContextOptions<GU_DB> options) : base(options)
+        //{
+
+        //}
+
+        //protected override void OnConfiguring(DbContextOptionBuilder optionBuilder)
+        //{
+
+        //}
 
         public DbSet<User> User { get; set; }
         public DbSet<ToDo_Task> ToDo_Task { get; set; }
@@ -34,11 +47,6 @@ namespace GU.Data
             modelBuilder.Entity<Tree_Type>().ToTable("Tree_Type");
             //modelBuilder.Entity<UserMapping>().ToTable("UserMapping").HasKey(c => new { c.User_ID, c.Tree_ID });
 
-
-
-
-
-           
 
         }
 

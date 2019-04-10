@@ -93,20 +93,24 @@ namespace GU
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddDbContext<GU_DB>(options =>
-       options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
-            
+       //     services.AddDbContext<GU_DB>(options =>
+       //options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
 
-            //var serviceProvider = services.BuildServiceProvider();
-            //DBInitialize.INIT(serviceProvider);
+
+       //     var serviceProvider = services.BuildServiceProvider();
+       //     DBInitialize.INIT(serviceProvider);
+
 
             services.AddSingleton<IFileProvider>(
             new PhysicalFileProvider(
                 Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")));
 
-            
+            //NEW ADD
+            var connection = @"User Id=admin;PASSWORD=Olympians13813sd;SERVER=203.151.47.84;database=GU_DB";
+            services.AddDbContext<GU_DB>
+                (options => options.UseSqlServer(connection));
+
             services
                 .AddMvc()
                 .AddJsonOptions(options =>
@@ -152,9 +156,11 @@ namespace GU
                 app.UseHsts();
             }
 
+    
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            //app.UseCookiePolicy();
+            app.UseCookiePolicy();
 
             app.UseMvc(routes =>
             {
